@@ -6,10 +6,16 @@ type KeyProps = {
   letter: string;
   character: string;
   isActive: boolean;
+  isTransparent: boolean;
 };
 
-const Key: FC<KeyProps> = ({ isActive, letter, character }): ReactElement => {
-  const classes = useStyle({ isActive });
+const Key: FC<KeyProps> = ({
+  isActive,
+  isTransparent,
+  letter,
+  character,
+}): ReactElement => {
+  const classes = useStyle({ isActive, isTransparent });
   return (
     <div className={classes.container}>
       <div className={classes.letter}>{letter}</div>
@@ -24,12 +30,15 @@ const useStyle = createUseStyles({
     color: ({ isActive }) => (isActive ? "#f3f6f6" : "#0f1010"),
     boxShadow: "3px 3px 2px #7d7d7d",
     borderRadius: "5px",
-    opacity: ({ isActive }) => (isActive ? 1 : 0.55),
+    opacity: ({ isActive, isTransparent }) =>
+      isTransparent ? (isActive ? 1 : 0.45) : 1,
     width: "60%",
     height: "60%",
 
     margin: "5px",
     padding: "5px",
+    transition: "opacity 100ms ease",
+
     "& *": {
       fontSize: "1rem",
       fontWeight: "bolder",

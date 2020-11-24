@@ -36,7 +36,6 @@ const keys: keyInfo[][] = [
     { letter: "B", character: "月", hints: "冂冖骨爫豸夕" },
     { letter: "N", character: "弓", hints: "亅乛阝乙⺄𠂊廴癶" },
     { letter: "M", character: "一", hints: "厂丆工刁" },
-    { letter: ",", character: "，", hints: "" },
   ],
 ];
 

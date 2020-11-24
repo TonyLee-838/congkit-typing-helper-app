@@ -1,11 +1,19 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
+import FunctionKey from "./FuntionKey";
 import HintBox from "./HintBox";
 import Key from "./Key";
-
 import keys from "./keyInfo";
 
-const Keyboard: FC = (): ReactElement => {
+interface KeyboardProps {
+  isTransparent: boolean;
+  onTransparencyChange: React.MouseEventHandler;
+}
+
+const Keyboard = ({
+  isTransparent,
+  onTransparencyChange,
+}: KeyboardProps): ReactElement => {
   const [activeKey, setActiveKey] = useState("");
 
   const handleClearKey = () => setActiveKey("");
@@ -20,9 +28,9 @@ const Keyboard: FC = (): ReactElement => {
 
   return (
     <div className={classes.container}>
-      {keys.map((col) => (
+      {keys.map((col, i) => (
         <div className={classes.keyboardColumn}>
-          {col.map((key) => (
+          {col.map((key, j) => (
             <div
               className={classes.keyContainer}
               onMouseDown={() => handleAddKey(key.letter.toUpperCase())}
@@ -32,12 +40,19 @@ const Keyboard: FC = (): ReactElement => {
                 letter={key.letter}
                 character={key.character}
                 isActive={activeKey.toUpperCase() === key.letter}
+                isTransparent={isTransparent}
               />
               {activeKey.toUpperCase() === key.letter && (
                 <HintBox hints={key.hints.split("")} />
               )}
             </div>
           ))}
+          {i === keys.length - 1 && (
+            <FunctionKey
+              isTransparent={isTransparent}
+              onClick={onTransparencyChange}
+            />
+          )}
         </div>
       ))}
     </div>
