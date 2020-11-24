@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import colors from "./config/color";
+import fontFamilies from "./config/fontFamily";
 
 interface HintBoxProps {
   hints: string[];
@@ -23,7 +24,6 @@ const useStyle = createUseStyles({
     padding: "5px",
     height: "1.5rem",
     borderRadius: "5px",
-    color: colors.white,
     fontWeight: "bolder",
     backgroundColor: colors.lightBlue,
     boxShadow: "2px 2px 2px" + colors.dark,
@@ -31,7 +31,10 @@ const useStyle = createUseStyles({
     width: "max-content",
   },
   hint: {
-    width: "0px 3px 0px 3px",
+    fontFamily: fontFamilies.text,
+    fontSize: "1.25rem",
+    color: colors.white,
+    width: "0px 10px 0px 10px",
   },
 });
 

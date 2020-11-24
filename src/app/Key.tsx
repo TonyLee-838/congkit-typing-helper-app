@@ -1,13 +1,14 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
+import fontFamilies from "./config/fontFamily";
 
-type IProps = {
+type KeyProps = {
   letter: string;
   character: string;
   isActive: boolean;
 };
 
-const Key: FC<IProps> = ({ isActive, letter, character }): ReactElement => {
+const Key: FC<KeyProps> = ({ isActive, letter, character }): ReactElement => {
   const classes = useStyle({ isActive });
   return (
     <div className={classes.container}>
@@ -23,16 +24,16 @@ const useStyle = createUseStyles({
     color: ({ isActive }) => (isActive ? "#f3f6f6" : "#0f1010"),
     boxShadow: "3px 3px 2px #7d7d7d",
     borderRadius: "5px",
-
-    width: "50px",
-    height: "50px",
+    opacity: ({ isActive }) => (isActive ? 1 : 0.55),
+    width: "60%",
+    height: "60%",
 
     margin: "5px",
     padding: "5px",
     "& *": {
       fontSize: "1rem",
       fontWeight: "bolder",
-      fontFamily: " Verdana, Geneva, sans-serif",
+      fontFamily: fontFamilies.text,
     },
   },
   character: {

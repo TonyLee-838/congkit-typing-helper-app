@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "main": "src/renderer/electron-starter.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -10,19 +11,24 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "concurrently": "^5.3.0",
+    "foreman": "^3.0.1",
     "jss": "^10.5.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-jss": "^10.5.0",
     "react-scripts": "4.0.0",
-    "typescript": "^4.0.5",
+    "typescript": "4.0.5",
+    "wait-on": "^5.2.0",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "BROWSER=none PORT=3010 react-scripts start",
+    "dev": "concurrently \"BROWSER=none PORT=3010 react-scripts start\" \"wait-on http://localhost:3010 && electron .\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron ."
   },
   "eslintConfig": {
     "extends": [
@@ -41,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "electron": "^11.0.2"
   }
 }

@@ -1,29 +1,39 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 import HintBox from "./HintBox";
 import Key from "./Key";
 
 import keys from "./keyInfo";
 
-interface KeyboardProps {
-  clicked: string;
-}
+const Keyboard: FC = (): ReactElement => {
+  const [activeKey, setActiveKey] = useState("");
 
-const Keyboard: FC<KeyboardProps> = ({ clicked }): ReactElement => {
-  const classes = useStyle({ clicked });
-  console.log(clicked);
+  const handleClearKey = () => setActiveKey("");
+  const handleAddKey = (key: string) => setActiveKey(key);
+
+  useEffect(() => {
+    document.onkeydown = (ev) => handleAddKey(ev.key);
+    document.onkeyup = handleClearKey;
+  }, []);
+
+  const classes = useStyle({ activeKey });
+
   return (
     <div className={classes.container}>
       {keys.map((col) => (
         <div className={classes.keyboardColumn}>
           {col.map((key) => (
-            <div className={classes.keyContainer}>
+            <div
+              className={classes.keyContainer}
+              onMouseDown={() => handleAddKey(key.letter.toUpperCase())}
+              onMouseUp={handleClearKey}
+            >
               <Key
                 letter={key.letter}
                 character={key.character}
-                isActive={clicked.toUpperCase() === key.letter}
+                isActive={activeKey.toUpperCase() === key.letter}
               />
-              {clicked.toUpperCase() === key.letter && (
+              {activeKey.toUpperCase() === key.letter && (
                 <HintBox hints={key.hints.split("")} />
               )}
             </div>
@@ -40,7 +50,7 @@ const useStyle = createUseStyles({
     flexDirection: "column",
     alignItems: "center",
 
-    padding: "50px",
+    padding: "10%",
     backgroundColor: "transparent",
   },
   keyboardColumn: {
@@ -49,6 +59,7 @@ const useStyle = createUseStyles({
     flexDirection: "row",
   },
   keyContainer: {
+    cursor: "pointer",
     position: "relative",
   },
 });
