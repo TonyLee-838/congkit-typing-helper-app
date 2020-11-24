@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 import FunctionKey from "./FuntionKey";
 import HintBox from "./HintBox";

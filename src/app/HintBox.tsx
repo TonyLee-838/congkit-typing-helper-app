@@ -28,6 +28,7 @@ const useStyle = createUseStyles({
     backgroundColor: colors.lightBlue,
     boxShadow: "2px 2px 2px" + colors.dark,
     top: "-40px",
+    left: "-10px",
     width: "max-content",
   },
   hint: {
