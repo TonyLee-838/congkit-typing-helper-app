@@ -2,50 +2,44 @@ import React, { ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
 import fontFamilies from "./config/fontFamily";
 import Icon from "./Icon";
+import Key, { KeyProps } from "./Key";
 
-interface FunctionKeyProp {
-  isTransparent: boolean;
-  onClick: React.MouseEventHandler;
+interface FunctionKeyProp extends KeyProps {
+  icon: string;
 }
 
 const FunctionKey = ({
   isTransparent,
-  onClick,
+  icon,
+  isActive,
+  onActivate,
+  onDeactivate,
 }: FunctionKeyProp): ReactElement => {
-  const [isActive, setIsActive] = useState(false);
-
-  const classes = useStyle({ isActive, isTransparent });
+  const classes = useStyle();
 
   return (
-    <div
+    <Key
+      onActivate={onActivate}
+      onDeactivate={onDeactivate}
+      isTransparent={isTransparent}
+      isActive={isActive}
       className={classes.container}
-      onMouseDown={() => setIsActive(true)}
-      onMouseUp={() => setIsActive(false)}
-      onClick={onClick}
     >
-      <Icon name="BsEyeFill" className={classes.icon} />
-    </div>
+      <Icon name={icon} className={classes.icon} />
+    </Key>
   );
 };
 
 const useStyle = createUseStyles({
   container: {
-    backgroundColor: ({ isActive }) => (isActive ? "#079afa" : "#e4e4e4"),
-    color: ({ isActive }) => (isActive ? "#f3f6f6" : "#0f1010"),
-    boxShadow: "3px 3px 2px #7d7d7d",
-    borderRadius: "5px",
-    opacity: ({ isActive, isTransparent }) =>
-      isTransparent ? (isActive ? 1 : 0.45) : 1,
     display: "flex",
-    width: "60%",
-    height: "20%",
-    margin: "5px",
-    padding: "15px 7px 15px 7px",
-    transition: "opacity 100ms ease",
-    cursor: "pointer",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "2.5px 5px 2.5px 5px",
+    // margin: "2px 5px 2px 5px",
   },
   icon: {
-    fontSize: "1.1rem",
+    fontSize: "0.9rem",
     fontWeight: "bolder",
     fontFamily: fontFamilies.text,
   },

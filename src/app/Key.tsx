@@ -1,25 +1,39 @@
 import React, { FC, ReactElement } from "react";
+import { useState } from "react";
 import { createUseStyles } from "react-jss";
 import fontFamilies from "./config/fontFamily";
 
-type KeyProps = {
-  letter: string;
-  character: string;
-  isActive: boolean;
+export type KeyProps = {
+  onActivate: Function;
+  onDeactivate: Function;
   isTransparent: boolean;
+  isActive: boolean;
+  className?: string;
 };
 
 const Key: FC<KeyProps> = ({
+  className,
+  children,
+  onActivate,
+  onDeactivate,
   isActive,
   isTransparent,
-  letter,
-  character,
 }): ReactElement => {
+  const handleMouseDown = () => {
+    onActivate();
+  };
+  const handleMouseUp = () => {
+    onDeactivate();
+  };
+
   const classes = useStyle({ isActive, isTransparent });
   return (
-    <div className={classes.container}>
-      <div className={classes.letter}>{letter}</div>
-      <div className={classes.character}>{character}</div>
+    <div
+      className={`${classes.container} ${className} `}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
+      {children}
     </div>
   );
 };
@@ -45,10 +59,6 @@ const useStyle = createUseStyles({
       fontFamily: fontFamilies.text,
     },
   },
-  character: {
-    textAlign: "end",
-  },
-  letter: {},
 });
 
 export default Key;

@@ -24,7 +24,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "BROWSER=none PORT=3010 react-scripts start",
+    "start": "PORT=3010 react-scripts start",
     "dev": "concurrently \"BROWSER=none PORT=3010 react-scripts start\" \"wait-on http://localhost:3010 && electron .\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
