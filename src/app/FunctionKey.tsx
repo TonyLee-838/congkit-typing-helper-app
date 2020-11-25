@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import fontFamilies from "./config/fontFamily";
 import Icon from "./Icon";
@@ -36,7 +36,6 @@ const useStyle = createUseStyles({
     justifyContent: "center",
     alignItems: "center",
     padding: "2.5px 5px 2.5px 5px",
-    // margin: "2px 5px 2px 5px",
   },
   icon: {
     fontSize: "0.9rem",

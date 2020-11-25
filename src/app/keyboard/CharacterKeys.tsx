@@ -1,9 +1,9 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 
-import HintBox from "./HintBox";
-import Key from "./Key";
-import { KeyInfo } from "./keyInfo";
+import HintBox from "../HintBox";
+import Key from "../Key";
+import { KeyInfo } from "../keyInfo";
 
 interface CharacterKeysProps {
   keys: KeyInfo[][];
@@ -11,9 +11,11 @@ interface CharacterKeysProps {
   isTransparent: boolean;
   onSetActiveKey: Function;
   onClearActiveKey: Function;
+  FunctionKeys: () => JSX.Element;
 }
 
 const CharacterKeys: FC<CharacterKeysProps> = ({
+  FunctionKeys,
   keys,
   activeKey,
   isTransparent,
@@ -23,7 +25,7 @@ const CharacterKeys: FC<CharacterKeysProps> = ({
   const classes = useKeysStyle();
   return (
     <div className={classes.container}>
-      {keys.map((col) => (
+      {keys.map((col, index) => (
         <div className={classes.keyboardColumn}>
           {col.map((key) => (
             <div className={classes.characterKeys}>
@@ -42,6 +44,7 @@ const CharacterKeys: FC<CharacterKeysProps> = ({
               )}
             </div>
           ))}
+          {index === keys.length - 1 && <FunctionKeys />}
         </div>
       ))}
     </div>
@@ -53,11 +56,6 @@ const useKeysStyle = createUseStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-
-    // Leave some room for function keys
-    "& > div:nth-child(3)": {
-      right: "15px",
-    },
   },
   keyboardColumn: {
     position: "relative",

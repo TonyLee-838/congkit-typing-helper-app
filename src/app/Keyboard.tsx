@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
-import CharacterKeys from "./CharacterKeys";
+import CharacterKeys from "./keyboard/CharacterKeys";
 import FunctionKey from "./FunctionKey";
 import keys from "./keyInfo";
 interface KeyboardProps {
@@ -27,6 +27,31 @@ const Keyboard = ({
 
   const classes = useStyle({ activeKey });
 
+  const FunctionKeys = () => (
+    <div className={classes.functionKeys}>
+      <FunctionKey
+        isActive={activeKey === "Trans"}
+        icon={"BsEyeFill"}
+        isTransparent={isTransparent}
+        onActivate={() => handleAddKey("Trans")}
+        onDeactivate={() => {
+          onTransparencyKeyClick();
+          handleClearKey();
+        }}
+      />
+      <FunctionKey
+        isActive={activeKey === "Expand"}
+        icon={"BsLayoutSidebarInsetReverse"}
+        isTransparent={isTransparent}
+        onActivate={() => handleAddKey("Expand")}
+        onDeactivate={() => {
+          onSidebarKeyClick();
+          handleClearKey();
+        }}
+      />
+    </div>
+  );
+
   return (
     <div className={classes.container}>
       <CharacterKeys
@@ -35,29 +60,8 @@ const Keyboard = ({
         isTransparent={isTransparent}
         onSetActiveKey={handleAddKey}
         onClearActiveKey={handleClearKey}
+        FunctionKeys={FunctionKeys}
       />
-      <div className={classes.functionKeys}>
-        <FunctionKey
-          isActive={activeKey === "Trans"}
-          icon={"BsEyeFill"}
-          isTransparent={isTransparent}
-          onActivate={() => handleAddKey("Trans")}
-          onDeactivate={() => {
-            onTransparencyKeyClick();
-            handleClearKey();
-          }}
-        />
-        <FunctionKey
-          isActive={activeKey === "Expand"}
-          icon={"BsLayoutSidebarInsetReverse"}
-          isTransparent={isTransparent}
-          onActivate={() => handleAddKey("Expand")}
-          onDeactivate={() => {
-            onSidebarKeyClick();
-            handleClearKey();
-          }}
-        />
-      </div>
     </div>
   );
 };
@@ -68,21 +72,9 @@ const useStyle = createUseStyles({
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
-    padding: "10%",
-    backgroundColor: "transparent",
   },
-  keyboardColumn: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "row",
-  },
-  characterKeys: {
-    cursor: "pointer",
-    position: "relative",
-  },
+
   functionKeys: {
-    top: "-71px",
-    right: "-136px",
     display: "flex",
     flexDirection: "column",
     height: "min-content",
