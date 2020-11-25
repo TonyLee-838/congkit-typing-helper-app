@@ -1,5 +1,4 @@
 import React, { FC, ReactElement } from "react";
-import { useState } from "react";
 import { createUseStyles } from "react-jss";
 import fontFamilies from "./config/fontFamily";
 

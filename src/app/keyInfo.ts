@@ -1,10 +1,10 @@
-interface keyInfo {
+export interface KeyInfo {
   letter: string;
   character: string;
   hints: string;
 }
 
-const keys: keyInfo[][] = [
+const keys: KeyInfo[][] = [
   [
     { letter: "Q", character: "手", hints: "扌㐄夫" },
     { letter: "W", character: "田", hints: "罒母黑" },

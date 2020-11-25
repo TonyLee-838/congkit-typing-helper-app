@@ -1,20 +1,23 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
-import CharacterKey from "./CharacterKey";
-import FunctionKey from "./FuntionKey";
-import HintBox from "./HintBox";
+import CharacterKeys from "./CharacterKeys";
+import FunctionKey from "./FunctionKey";
 import keys from "./keyInfo";
+interface KeyboardProps {
+  isTransparent: boolean;
+  onSidebarKeyClick: Function;
+  onTransparencyKeyClick: Function;
+}
 
-const Keyboard = (): ReactElement => {
+const Keyboard = ({
+  isTransparent,
+  onSidebarKeyClick,
+  onTransparencyKeyClick,
+}: KeyboardProps): ReactElement => {
   const [activeKey, setActiveKey] = useState("");
-  const [isTransparent, setIsTransparent] = useState(true);
 
   const handleClearKey = () => setActiveKey("");
   const handleAddKey = (key: string) => setActiveKey(key);
-  const handleChangeTransparency = () => {
-    setActiveKey("");
-    setIsTransparent(!isTransparent);
-  };
 
   //register keyboard event to global document object.
   useEffect(() => {
@@ -26,36 +29,35 @@ const Keyboard = (): ReactElement => {
 
   return (
     <div className={classes.container}>
-      {keys.map((col, index) => (
-        <div className={classes.keyboardColumn}>
-          {col.map((key) => (
-            <div className={classes.characterKeys}>
-              <CharacterKey
-                letter={key.letter}
-                character={key.character}
-                isActive={activeKey.toUpperCase() === key.letter}
-                isTransparent={isTransparent}
-                onActivate={() => handleAddKey(key.letter.toUpperCase())}
-                onDeactivate={handleClearKey}
-              />
-              {activeKey.toUpperCase() === key.letter && (
-                <HintBox hints={key.hints.split("")} />
-              )}
-            </div>
-          ))}
-          {index === keys.length - 1 && (
-            <div className={classes.functionKeys}>
-              <FunctionKey
-                isActive={activeKey === "Trans"}
-                icon={"BsEyeFill"}
-                isTransparent={isTransparent}
-                onActivate={() => handleAddKey("Trans")}
-                onDeactivate={handleChangeTransparency}
-              />
-            </div>
-          )}
-        </div>
-      ))}
+      <CharacterKeys
+        keys={keys}
+        activeKey={activeKey}
+        isTransparent={isTransparent}
+        onSetActiveKey={handleAddKey}
+        onClearActiveKey={handleClearKey}
+      />
+      <div className={classes.functionKeys}>
+        <FunctionKey
+          isActive={activeKey === "Trans"}
+          icon={"BsEyeFill"}
+          isTransparent={isTransparent}
+          onActivate={() => handleAddKey("Trans")}
+          onDeactivate={() => {
+            onTransparencyKeyClick();
+            handleClearKey();
+          }}
+        />
+        <FunctionKey
+          isActive={activeKey === "Expand"}
+          icon={"BsLayoutSidebarInsetReverse"}
+          isTransparent={isTransparent}
+          onActivate={() => handleAddKey("Expand")}
+          onDeactivate={() => {
+            onSidebarKeyClick();
+            handleClearKey();
+          }}
+        />
+      </div>
     </div>
   );
 };
@@ -65,7 +67,7 @@ const useStyle = createUseStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-
+    position: "relative",
     padding: "10%",
     backgroundColor: "transparent",
   },
@@ -79,9 +81,13 @@ const useStyle = createUseStyles({
     position: "relative",
   },
   functionKeys: {
+    top: "-71px",
+    right: "-136px",
     display: "flex",
     flexDirection: "column",
     height: "min-content",
+    width: "min-content",
+    position: "relative",
   },
 });
 
