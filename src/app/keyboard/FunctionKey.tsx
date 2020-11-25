@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { createUseStyles } from "react-jss";
-import fontFamilies from "./config/fontFamily";
-import Icon from "./Icon";
+import fontFamilies from "../config/fontFamily";
+import Icon from "../common/Icon";
 import Key, { KeyProps } from "./Key";
 
 interface FunctionKeyProp extends KeyProps {

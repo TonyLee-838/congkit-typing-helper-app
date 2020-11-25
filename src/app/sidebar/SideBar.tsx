@@ -1,17 +1,24 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
+
 import colors from "../config/color";
-import Icon from "../Icon";
+import Icon from "../common/Icon";
 
 interface SideBarProps {
   isExpanded: boolean;
 }
 
+const handleOpenMemo = () => {};
+
 const SideBar: FC<SideBarProps> = ({ isExpanded }): ReactElement => {
   const classes = useStyle({ isExpanded });
   return (
     <div className={classes.container}>
-      <Icon name="BsBookmarksFill" className={classes.icon} />
+      <Icon
+        name="BsBookmarksFill"
+        className={classes.icon}
+        onClick={handleOpenMemo}
+      />
       <Icon name="BsGearFill" className={classes.icon} />
       <Icon name="BsPower" className={`${classes.icon} ${classes.exitIcon} `} />
     </div>
@@ -20,7 +27,7 @@ const SideBar: FC<SideBarProps> = ({ isExpanded }): ReactElement => {
 
 const useStyle = createUseStyles({
   container: {
-    transition: "all 300ms ease-in-out ",
+    transition: "all 150ms ease-in-out ",
     position: "relative",
     height: "195px",
     width: ({ isExpanded }) => (isExpanded ? "70px" : "0px"),

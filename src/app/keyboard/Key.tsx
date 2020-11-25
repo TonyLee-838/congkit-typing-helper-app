@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
-import fontFamilies from "./config/fontFamily";
+import fontFamilies from "../config/fontFamily";
 
 export type KeyProps = {
   onActivate: Function;

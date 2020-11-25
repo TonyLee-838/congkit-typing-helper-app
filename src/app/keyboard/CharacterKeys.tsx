@@ -1,8 +1,8 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 
-import HintBox from "../HintBox";
-import Key from "../Key";
+import HintBox from "./HintBox";
+import Key from "./Key";
 import { KeyInfo } from "../keyInfo";
 
 interface CharacterKeysProps {

@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
-import CharacterKeys from "./keyboard/CharacterKeys";
+import CharacterKeys from "./CharacterKeys";
 import FunctionKey from "./FunctionKey";
-import keys from "./keyInfo";
+import keys from "../keyInfo";
 interface KeyboardProps {
   isTransparent: boolean;
   onSidebarKeyClick: Function;

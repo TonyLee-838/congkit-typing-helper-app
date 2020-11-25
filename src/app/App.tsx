@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Keyboard from "./Keyboard";
+
 import SideBar from "./sidebar/SideBar";
+import Keyboard from "./keyboard/Keyboard";
 import { createUseStyles } from "react-jss";
 
 function App() {
