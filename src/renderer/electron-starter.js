@@ -2,14 +2,17 @@ const { app, BrowserWindow } = require("electron");
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
-    height: 480,
-    width: 560,
-    transparent: true,
+    height: 300,
+    width: 480,
+    transparent: false,
     alwaysOnTop: true,
     maximizable: false,
     resizable: false,
     x: 0,
     y: 0,
+    webPreferences: {
+      enableRemoteModule: true,
+    },
   });
 
   mainWindow.loadURL("http://localhost:3010");

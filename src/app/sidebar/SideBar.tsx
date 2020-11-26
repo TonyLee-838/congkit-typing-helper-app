@@ -6,18 +6,17 @@ import Icon from "../common/Icon";
 
 interface SideBarProps {
   isExpanded: boolean;
+  onSelect: Function;
 }
 
-const handleOpenMemo = () => {};
-
-const SideBar: FC<SideBarProps> = ({ isExpanded }): ReactElement => {
+const SideBar: FC<SideBarProps> = ({ isExpanded, onSelect }): ReactElement => {
   const classes = useStyle({ isExpanded });
   return (
     <div className={classes.container}>
       <Icon
         name="BsBookmarksFill"
         className={classes.icon}
-        onClick={handleOpenMemo}
+        onClick={() => onSelect("memo")}
       />
       <Icon name="BsGearFill" className={classes.icon} />
       <Icon name="BsPower" className={`${classes.icon} ${classes.exitIcon} `} />
