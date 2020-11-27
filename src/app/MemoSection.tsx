@@ -1,10 +1,9 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
-import { MemoSectionType } from "./Memo";
 import MemoEntity from "./MemoEntity";
 
 interface MemoSectionProps {
-  section: MemoSectionType;
+  section: Memo.SectionType;
 }
 
 const MemoSection: FC<MemoSectionProps> = ({ section }): ReactElement => {

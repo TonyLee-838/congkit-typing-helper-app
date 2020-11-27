@@ -1,10 +1,9 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import colors from "./config/color";
-import { MemoEntityType } from "./Memo";
 
 interface MemoEntityProps {
-  entity: MemoEntityType;
+  entity: Memo.EntityType;
 }
 
 const MemoEntity: FC<MemoEntityProps> = ({ entity }): ReactElement => {

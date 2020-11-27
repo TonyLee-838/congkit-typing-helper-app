@@ -6,16 +6,7 @@ import colors from "./config/color";
 import fontFamilies from "./config/fontFamily";
 import MemoSection from "./MemoSection";
 
-export type MemoEntityType = {
-  input: string;
-  char: string;
-};
-export type MemoSectionType = {
-  subject: string;
-  entities: MemoEntityType[];
-};
-
-const fakeMemo: MemoSectionType[] = [
+const fakeMemo: Memo.SectionType[] = [
   {
     subject: "左右結構",
     entities: [
@@ -68,7 +59,7 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
   const classes = useStyle();
 
   // eslint-disable-next-line
-  const [memo, setMemo] = useState<MemoSectionType[]>(fakeMemo);
+  const [memo, setMemo] = useState<Memo.SectionType[]>(fakeMemo);
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
