@@ -58,14 +58,36 @@ interface MemoProps extends ExpandableProps {}
 const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
   const classes = useStyle();
 
-  // eslint-disable-next-line
   const [memo, setMemo] = useState<Memo.SectionType[]>(fakeMemo);
+
+  const handleSectionChange = (
+    value: string,
+    entityIndex: number,
+    sectionIndex: number
+  ) => {
+    const [char, input] = value.split("＝");
+    const copy = memo;
+
+    // Creating new entity
+    if (entityIndex === -1) {
+      copy[sectionIndex].entities.push({ input, char });
+    } else {
+      //update existing entity
+      copy[sectionIndex].entities[entityIndex] = { input, char };
+    }
+    setMemo(copy);
+  };
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
         {memo.map((section, index) => (
           <>
-            <MemoSection section={section} />
+            <MemoSection
+              section={section}
+              onSectionChange={(value: string, entityIndex: number) =>
+                handleSectionChange(value, entityIndex, index)
+              }
+            />
             {index !== memo.length - 1 && <Separator />}
           </>
         ))}

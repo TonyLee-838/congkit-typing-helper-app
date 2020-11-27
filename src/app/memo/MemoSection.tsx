@@ -6,9 +6,13 @@ import MemoEntity from "./MemoEntity";
 
 interface MemoSectionProps {
   section: Memo.SectionType;
+  onSectionChange: Function;
 }
 
-const MemoSection: FC<MemoSectionProps> = ({ section }): ReactElement => {
+const MemoSection: FC<MemoSectionProps> = ({
+  section,
+  onSectionChange,
+}): ReactElement => {
   const classes = useStyle();
   const [editMode, setEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState("");
@@ -23,6 +27,11 @@ const MemoSection: FC<MemoSectionProps> = ({ section }): ReactElement => {
             editMode={editMode && editIndex === index.toString()}
             entity={entity}
             onClick={() => setEditIndex(index.toString())}
+            onCancel={() => setEditIndex("")}
+            onSubmit={(value) => {
+              onSectionChange(value, index);
+              setEditIndex("");
+            }}
           />
         ))}
 
@@ -30,6 +39,11 @@ const MemoSection: FC<MemoSectionProps> = ({ section }): ReactElement => {
           <MemoAddButton
             editable={editIndex === "new"}
             onAddButtonClick={() => setEditIndex("new")}
+            onCancel={() => setEditIndex("")}
+            onSubmit={(value) => {
+              onSectionChange(value, -1);
+              setEditIndex("");
+            }}
           />
         )}
       </div>

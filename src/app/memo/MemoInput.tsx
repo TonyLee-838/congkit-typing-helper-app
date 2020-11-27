@@ -1,14 +1,22 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
 import Icon from "../common/Icon";
 import colors from "../config/color";
 
 interface MemoInputProps {
-  value: string;
+  initialValue?: string;
+  onCancel: React.MouseEventHandler;
+  onSubmit: Function;
 }
 
-const MemoInput: FC<MemoInputProps> = ({ value }): ReactElement => {
+const MemoInput: FC<MemoInputProps> = ({
+  initialValue = "",
+  onCancel,
+  onSubmit,
+}): ReactElement => {
   const classes = useStyle();
+  const [value, setValue] = useState(initialValue);
+
   return (
     <div className={classes.container}>
       <input
@@ -16,10 +24,15 @@ const MemoInput: FC<MemoInputProps> = ({ value }): ReactElement => {
         type="text"
         className={classes.input}
         placeholder="例＝人弓"
+        onChange={(e) => setValue(e.target.value)}
       />
       <div className={classes.icons}>
-        <Icon name="BsX" className={classes.cancelIcon} />
-        <Icon name="BsCheck" className={classes.submitIcon} />
+        <Icon name="BsX" className={classes.cancelIcon} onClick={onCancel} />
+        <Icon
+          name="BsCheck"
+          className={classes.submitIcon}
+          onClick={() => onSubmit(value)}
+        />
       </div>
     </div>
   );

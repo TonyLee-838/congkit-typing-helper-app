@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import Icon from "../common/Icon";
+import colors from "../config/color";
 
 interface MemoControlButtonsProps {
   editMode: boolean;
@@ -15,7 +16,11 @@ const MemoControlButtons: FC<MemoControlButtonsProps> = ({
 }): ReactElement => {
   const classes = useStyle();
   return editMode ? (
-    <Icon name="BsCheck" className={classes.editIcon} onClick={onFinish} />
+    <Icon
+      name="BsCheck"
+      className={`${classes.editIcon} ${classes.finishIcon} `}
+      onClick={onFinish}
+    />
   ) : (
     <Icon name="BsHammer" className={classes.editIcon} onClick={onEdit} />
   );
@@ -24,15 +29,23 @@ const MemoControlButtons: FC<MemoControlButtonsProps> = ({
 const useStyle = createUseStyles({
   editIcon: {
     position: "absolute",
-    width: "max-content",
+    width: "30px",
     top: "3px",
-    right: "30px",
-    opacity: 0.1,
+    right: "25px",
+
+    opacity: 0.15,
+    color: colors.dark,
     "&:hover": {
       opacity: 1,
+      fontWeight: "bolder",
     },
-    fontSize: "15px",
+    fontSize: "25px",
     fontWeight: "bold",
+    transition: "all 100ms ease",
+  },
+  finishIcon: {
+    color: colors.green,
+    opacity: 0.7,
   },
 });
 

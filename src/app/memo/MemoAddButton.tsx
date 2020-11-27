@@ -7,15 +7,19 @@ import MemoInput from "./MemoInput";
 interface MemoAddButtonProps {
   editable: boolean;
   onAddButtonClick: React.MouseEventHandler;
+  onCancel: React.MouseEventHandler;
+  onSubmit: React.MouseEventHandler;
 }
 
 const MemoAddButton: FC<MemoAddButtonProps> = ({
   editable,
   onAddButtonClick,
+  onCancel,
+  onSubmit,
 }): ReactElement => {
   const classes = useStyle();
   return editable ? (
-    <MemoInput value={""} />
+    <MemoInput onCancel={onCancel} onSubmit={onSubmit} />
   ) : (
     <Icon
       name="BsPlusCircle"
