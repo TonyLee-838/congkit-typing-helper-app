@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";
 import { createUseStyles } from "react-jss";
-import Memo from "./Memo";
+import Memo from "./memo/Memo";
 
 type ControlButtonType = "memo" | "setting" | "exit" | "";
 

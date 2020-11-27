@@ -15,7 +15,9 @@ const Icon = ({ name, className = "", onClick = null }) => {
 };
 
 const useStyle = createUseStyles({
-  icon: {},
+  icon: {
+    cursor: "pointer",
+  },
 });
 
 export default Icon;

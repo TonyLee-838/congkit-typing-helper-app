@@ -1,9 +1,10 @@
 import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
-import ExpandableDiv, { ExpandableProps } from "./common/ExpandableDiv";
-import Separator from "./common/Separator";
-import colors from "./config/color";
-import fontFamilies from "./config/fontFamily";
+
+import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
+import Separator from "../common/Separator";
+import colors from "../config/color";
+import fontFamilies from "../config/fontFamily";
 import MemoSection from "./MemoSection";
 
 const fakeMemo: Memo.SectionType[] = [
@@ -58,14 +59,50 @@ interface MemoProps extends ExpandableProps {}
 const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
   const classes = useStyle();
 
-  // eslint-disable-next-line
   const [memo, setMemo] = useState<Memo.SectionType[]>(fakeMemo);
+
+  const handleSectionEntityChange = (
+    value: string,
+    entityIndex: number,
+    sectionIndex: number
+  ) => {
+    const [char, input] = value.split("＝");
+    const copy = memo;
+
+    // Creating new entity
+    if (entityIndex === -1) {
+      copy[sectionIndex].entities.push({ input, char });
+    } else {
+      //update existing entity
+      copy[sectionIndex].entities[entityIndex] = { input, char };
+    }
+    setMemo(copy);
+  };
+
+  const handleSectionSubjectChange = (value: string, index: number) => {
+    const copy = memo;
+    copy[index] = {
+      subject: value,
+      entities: copy[index].entities,
+    };
+
+    setMemo(copy);
+  };
+
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
         {memo.map((section, index) => (
           <>
-            <MemoSection section={section} />
+            <MemoSection
+              section={section}
+              onSectionEntityChange={(value: string, entityIndex: number) =>
+                handleSectionEntityChange(value, entityIndex, index)
+              }
+              onSectionSubjectChange={(value: string) =>
+                handleSectionSubjectChange(value, index)
+              }
+            />
             {index !== memo.length - 1 && <Separator />}
           </>
         ))}

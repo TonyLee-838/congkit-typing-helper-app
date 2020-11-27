@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
+import colors from "../config/color";
 import fontFamilies from "../config/fontFamily";
 
 export type KeyProps = {
@@ -39,9 +40,10 @@ const Key: FC<KeyProps> = ({
 
 const useStyle = createUseStyles({
   container: {
-    backgroundColor: ({ isActive }) => (isActive ? "#079afa" : "#e4e4e4"),
-    color: ({ isActive }) => (isActive ? "#f3f6f6" : "#0f1010"),
-    boxShadow: "3px 3px 2px #7d7d7d",
+    backgroundColor: ({ isActive }) =>
+      isActive ? colors.lightBlue : colors.light,
+    color: ({ isActive }) => (isActive ? colors.white : colors.black),
+    boxShadow: "3px 3px 2px " + colors.dark,
     borderRadius: "5px",
     opacity: ({ isActive, isTransparent }) =>
       isTransparent ? (isActive ? 1 : 0.45) : 1,
