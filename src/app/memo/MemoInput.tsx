@@ -7,12 +7,16 @@ interface MemoInputProps {
   initialValue?: string;
   onCancel: React.MouseEventHandler;
   onSubmit: Function;
+  deleteButton?: boolean;
+  onDelete?: React.MouseEventHandler;
 }
 
 const MemoInput: FC<MemoInputProps> = ({
   initialValue = "",
   onCancel,
   onSubmit,
+  deleteButton = false,
+  onDelete,
 }): ReactElement => {
   const classes = useStyle();
   const [value, setValue] = useState(initialValue);
@@ -33,6 +37,13 @@ const MemoInput: FC<MemoInputProps> = ({
           className={classes.submitIcon}
           onClick={() => onSubmit(value)}
         />
+        {deleteButton && (
+          <Icon
+            name="BsTrash"
+            className={classes.deleteIcon}
+            onClick={onDelete}
+          />
+        )}
       </div>
     </div>
   );
@@ -65,6 +76,9 @@ const useStyle = createUseStyles({
   submitIcon: {
     color: colors.green,
     // fontSize: "1.5rem",
+  },
+  deleteIcon: {
+    color: colors.darkBlue,
   },
 });
 

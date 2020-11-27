@@ -3,15 +3,18 @@ import { createUseStyles } from "react-jss";
 import MemoAddButton from "./MemoAddButton";
 import MemoControlButtons from "./MemoControlButtons";
 import MemoEntity from "./MemoEntity";
+import MemoSubject from "./MemoSubject";
 
 interface MemoSectionProps {
   section: Memo.SectionType;
-  onSectionChange: Function;
+  onSectionEntityChange: Function;
+  onSectionSubjectChange: Function;
 }
 
 const MemoSection: FC<MemoSectionProps> = ({
   section,
-  onSectionChange,
+  onSectionEntityChange,
+  onSectionSubjectChange,
 }): ReactElement => {
   const classes = useStyle();
   const [editMode, setEditMode] = useState(false);
@@ -19,7 +22,16 @@ const MemoSection: FC<MemoSectionProps> = ({
 
   return (
     <div className={classes.container}>
-      <h3 className={classes.subject}>{section.subject}</h3>
+      <MemoSubject
+        subject={section.subject}
+        editMode={editMode && editIndex === "subject"}
+        onCancel={() => setEditIndex("")}
+        onClick={() => setEditIndex("subject")}
+        onSubmit={(value) => {
+          onSectionSubjectChange(value);
+          setEditIndex("");
+        }}
+      />
 
       <div className={classes.section}>
         {section.entities.map((entity, index) => (
@@ -29,7 +41,7 @@ const MemoSection: FC<MemoSectionProps> = ({
             onClick={() => setEditIndex(index.toString())}
             onCancel={() => setEditIndex("")}
             onSubmit={(value) => {
-              onSectionChange(value, index);
+              onSectionEntityChange(value, index);
               setEditIndex("");
             }}
           />
@@ -41,7 +53,7 @@ const MemoSection: FC<MemoSectionProps> = ({
             onAddButtonClick={() => setEditIndex("new")}
             onCancel={() => setEditIndex("")}
             onSubmit={(value) => {
-              onSectionChange(value, -1);
+              onSectionEntityChange(value, -1);
               setEditIndex("");
             }}
           />

@@ -30,7 +30,8 @@ const useStyle = createUseStyles({
     height: "195px",
     right: "100px",
     boxShadow: "3px 3px 3.5px" + colors.dark,
-    overflow: "scroll",
+    overflowY: "scroll",
+    overflowX: "hidden",
 
     backgroundColor: colors.light,
     "& *": {

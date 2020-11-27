@@ -19,8 +19,6 @@ const MemoEntity: FC<MemoEntityProps> = ({
   onSubmit,
 }): ReactElement => {
   const classes = useStyle({ editMode });
-
-  console.log(this, editMode);
   return editMode ? (
     <MemoInput
       initialValue={`${entity.char}＝${entity.input}`}

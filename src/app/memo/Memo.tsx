@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
+
 import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
 import Separator from "../common/Separator";
 import colors from "../config/color";
@@ -60,7 +61,7 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
 
   const [memo, setMemo] = useState<Memo.SectionType[]>(fakeMemo);
 
-  const handleSectionChange = (
+  const handleSectionEntityChange = (
     value: string,
     entityIndex: number,
     sectionIndex: number
@@ -77,6 +78,17 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
     }
     setMemo(copy);
   };
+
+  const handleSectionSubjectChange = (value: string, index: number) => {
+    const copy = memo;
+    copy[index] = {
+      subject: value,
+      entities: copy[index].entities,
+    };
+
+    setMemo(copy);
+  };
+
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
@@ -84,8 +96,11 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
           <>
             <MemoSection
               section={section}
-              onSectionChange={(value: string, entityIndex: number) =>
-                handleSectionChange(value, entityIndex, index)
+              onSectionEntityChange={(value: string, entityIndex: number) =>
+                handleSectionEntityChange(value, entityIndex, index)
+              }
+              onSectionSubjectChange={(value: string) =>
+                handleSectionSubjectChange(value, index)
               }
             />
             {index !== memo.length - 1 && <Separator />}
