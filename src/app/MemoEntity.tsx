@@ -1,15 +1,24 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import colors from "./config/color";
+import MemoInput from "./MemoInput";
 
 interface MemoEntityProps {
   entity: Memo.EntityType;
+  editMode: boolean;
+  onClick: React.MouseEventHandler;
 }
 
-const MemoEntity: FC<MemoEntityProps> = ({ entity }): ReactElement => {
+const MemoEntity: FC<MemoEntityProps> = ({
+  entity,
+  editMode,
+  onClick,
+}): ReactElement => {
   const classes = useStyle();
-  return (
-    <div className={classes.entity}>
+  return editMode ? (
+    <MemoInput value={`${entity.char}＝${entity.input}`} />
+  ) : (
+    <div className={classes.entity} onClick={onClick}>
       <span className={classes.char}>{entity.char}</span>
       <span className={classes.input}>{entity.input}</span>
     </div>
@@ -18,7 +27,9 @@ const MemoEntity: FC<MemoEntityProps> = ({ entity }): ReactElement => {
 
 const useStyle = createUseStyles({
   entity: {
-    // fontFamily: fontFamilies.text,
+    "& *": {
+      cursor: "pointer",
+    },
   },
   char: {
     color: colors.darkBlue,

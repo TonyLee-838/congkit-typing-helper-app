@@ -25,14 +25,14 @@ const ExpandableDiv: FC<ExpandableProps> = ({
 const useStyle = createUseStyles({
   container: {
     position: "absolute",
-    width: ({ expanded }) => (expanded ? "77%" : "0%"),
+    width: ({ expanded }) => (expanded ? "370px" : "0%"),
     transition: "width 300ms ease",
     height: "195px",
     right: "100px",
     boxShadow: "3px 3px 3.5px" + colors.dark,
     overflow: "scroll",
 
-    backgroundColor: colors.medium,
+    backgroundColor: colors.light,
     "& *": {
       width: ({ expanded }) => (expanded ? "100%" : "0%"),
     },

@@ -31,7 +31,7 @@ const useStyle = createUseStyles({
     height: "195px",
     width: ({ isExpanded }) => (isExpanded ? "70px" : "0px"),
     right: ({ isExpanded }) => (isExpanded ? "-10px" : "-80px"),
-    backgroundColor: colors.medium,
+    backgroundColor: colors.light,
     borderTopLeftRadius: "5px",
     borderBottomLeftRadius: "5px",
     boxShadow: "3px 3px 3.5px" + colors.dark,
