@@ -23,6 +23,7 @@ function App() {
     <div className={`App ${classes.container} `}>
       <Keyboard
         isTransparent={isTransparent}
+        listenToKeyboard={!buttonSelected}
         onSidebarKeyClick={() => {
           setIsSidebarExpanded(!isSidebarExpanded);
           setIsTransparent(false);

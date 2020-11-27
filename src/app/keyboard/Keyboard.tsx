@@ -4,12 +4,14 @@ import CharacterKeys from "./CharacterKeys";
 import FunctionKey from "./FunctionKey";
 import keys from "../keyInfo";
 interface KeyboardProps {
+  listenToKeyboard: boolean;
   isTransparent: boolean;
   onSidebarKeyClick: Function;
   onTransparencyKeyClick: Function;
 }
 
 const Keyboard = ({
+  listenToKeyboard,
   isTransparent,
   onSidebarKeyClick,
   onTransparencyKeyClick,
@@ -21,9 +23,14 @@ const Keyboard = ({
 
   //register keyboard event to global document object.
   useEffect(() => {
-    document.onkeydown = (ev) => handleAddKey(ev.key);
-    document.onkeyup = handleClearKey;
-  }, []);
+    if (listenToKeyboard) {
+      document.onkeydown = (ev) => handleAddKey(ev.key);
+      document.onkeyup = handleClearKey;
+    } else {
+      document.onkeydown = null;
+      document.onkeyup = null;
+    }
+  }, [listenToKeyboard]);
 
   const classes = useStyle({ activeKey });
 

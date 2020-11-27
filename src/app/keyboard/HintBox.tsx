@@ -30,7 +30,7 @@ const useStyle = createUseStyles({
     top: "-40px",
     left: "-10px",
     width: "max-content",
-    zIndex: "3",
+    zIndex: "2",
   },
   hint: {
     fontFamily: fontFamilies.text,
