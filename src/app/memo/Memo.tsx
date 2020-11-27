@@ -1,9 +1,9 @@
 import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
-import ExpandableDiv, { ExpandableProps } from "./common/ExpandableDiv";
-import Separator from "./common/Separator";
-import colors from "./config/color";
-import fontFamilies from "./config/fontFamily";
+import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
+import Separator from "../common/Separator";
+import colors from "../config/color";
+import fontFamilies from "../config/fontFamily";
 import MemoSection from "./MemoSection";
 
 const fakeMemo: Memo.SectionType[] = [

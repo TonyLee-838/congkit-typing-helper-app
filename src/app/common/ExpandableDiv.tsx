@@ -1,4 +1,4 @@
-import React, { FC, ReactChildren, ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 
 import colors from "../config/color";
