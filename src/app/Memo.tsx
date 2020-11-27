@@ -1,33 +1,111 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
-
+import ExpandableDiv, { ExpandableProps } from "./common/ExpandableDiv";
+import Separator from "./common/Separator";
 import colors from "./config/color";
+import fontFamilies from "./config/fontFamily";
+import MemoSection from "./MemoSection";
 
-interface MemoProps {}
+export type MemoEntityType = {
+  input: string;
+  char: string;
+};
+export type MemoSectionType = {
+  subject: string;
+  entities: MemoEntityType[];
+};
 
-const Memo: FC<MemoProps> = (): ReactElement => {
-  const [expanded, setExpanded] = useState(false);
+const fakeMemo: MemoSectionType[] = [
+  {
+    subject: "左右結構",
+    entities: [
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+    ],
+  },
+  {
+    subject: "左右結構",
+    entities: [
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+    ],
+  },
+  {
+    subject: "左右結構",
+    entities: [
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+    ],
+  },
+  {
+    subject: "左右結構",
+    entities: [
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+      { input: "尸中", char: "聊" },
+      { input: "卜心", char: "託" },
+      { input: "竹月", char: "師" },
+    ],
+  },
+];
 
-  useEffect(() => {
-    setExpanded(true);
+interface MemoProps extends ExpandableProps {}
 
-    return () => setExpanded(false);
-  }, []);
+const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
+  const classes = useStyle();
 
-  const classes = useStyle({ expanded });
-  return <div className={classes.container}></div>;
+  // eslint-disable-next-line
+  const [memo, setMemo] = useState<MemoSectionType[]>(fakeMemo);
+  return (
+    <ExpandableDiv expanded={expanded}>
+      <div className={classes.container}>
+        {memo.map((section, index) => (
+          <>
+            <MemoSection section={section} />
+            {index !== memo.length - 1 && <Separator />}
+          </>
+        ))}
+      </div>
+    </ExpandableDiv>
+  );
 };
 
 const useStyle = createUseStyles({
   container: {
-    position: "absolute",
-    width: ({ expanded }) => (expanded ? "77%" : "0%"),
-    transition: "width 300ms ease",
-    height: "195px",
-    right: "75px",
-    boxShadow: "3px 3px 3.5px" + colors.dark,
-
-    backgroundColor: colors.medium,
+    margin: 0,
+    padding: "10px",
+    fontFamily: fontFamilies.text,
+  },
+  subject: {
+    margin: 0,
+  },
+  content: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr",
+  },
+  entity: {
+    // fontFamily: fontFamilies.text,
+  },
+  key: {
+    color: colors.darkBlue,
+    fontWeight: "bolder",
+    marginRight: "4px",
+  },
+  value: {
+    color: colors.red,
   },
 });
 

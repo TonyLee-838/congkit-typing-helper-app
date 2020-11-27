@@ -15,9 +15,7 @@ function App() {
 
   const handleButtonSelect = (button: ControlButtonType) => {
     button === buttonSelected
-      ? setTimeout(() => {
-          setButtonSelected("");
-        }, 300)
+      ? setButtonSelected("")
       : setButtonSelected(button);
   };
 
@@ -32,7 +30,7 @@ function App() {
         onTransparencyKeyClick={() => setIsTransparent(!isTransparent)}
       />
       <SideBar isExpanded={isSidebarExpanded} onSelect={handleButtonSelect} />
-      {buttonSelected === "memo" && <Memo />}
+      <Memo expanded={buttonSelected === "memo"} />
     </div>
   );
 }
@@ -41,7 +39,7 @@ const useStyle = createUseStyles({
   container: {
     display: "flex",
     backgroundColor: "transparent",
-    padding: "30px",
+    paddingTop: "35px",
   },
 });
 

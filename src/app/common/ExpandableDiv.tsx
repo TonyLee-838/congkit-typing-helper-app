@@ -1,0 +1,42 @@
+import React, { FC, ReactChildren, ReactElement } from "react";
+import { createUseStyles } from "react-jss";
+
+import colors from "../config/color";
+
+export interface ExpandableProps {
+  expanded: boolean;
+  children?: ReactElement;
+  className?: string;
+}
+
+const ExpandableDiv: FC<ExpandableProps> = ({
+  expanded = false,
+  children,
+  className = "",
+}): ReactElement => {
+  const classes = useStyle({ expanded });
+  return (
+    <div className={`${classes.container} ${className} `}>
+      {expanded ? children : null}
+    </div>
+  );
+};
+
+const useStyle = createUseStyles({
+  container: {
+    position: "absolute",
+    width: ({ expanded }) => (expanded ? "77%" : "0%"),
+    transition: "width 300ms ease",
+    height: "195px",
+    right: "100px",
+    boxShadow: "3px 3px 3.5px" + colors.dark,
+    overflow: "scroll",
+
+    backgroundColor: colors.medium,
+    "& *": {
+      width: ({ expanded }) => (expanded ? "100%" : "0%"),
+    },
+  },
+});
+
+export default ExpandableDiv;
