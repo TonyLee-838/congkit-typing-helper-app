@@ -9,6 +9,7 @@ interface MemoAddButtonProps {
   onAddButtonClick: React.MouseEventHandler;
   onCancel: React.MouseEventHandler;
   onSubmit: React.MouseEventHandler;
+  placeholder?: string;
 }
 
 const MemoAddButton: FC<MemoAddButtonProps> = ({
@@ -16,10 +17,15 @@ const MemoAddButton: FC<MemoAddButtonProps> = ({
   onAddButtonClick,
   onCancel,
   onSubmit,
+  placeholder,
 }): ReactElement => {
   const classes = useStyle();
   return editable ? (
-    <MemoInput onCancel={onCancel} onSubmit={onSubmit} />
+    <MemoInput
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      placeholder={placeholder}
+    />
   ) : (
     <Icon
       name="BsPlusCircle"
@@ -35,6 +41,7 @@ const useStyle = createUseStyles({
     justifyContent: "center",
     alignItems: "center",
     width: "max-content",
+    margin: "5px",
     padding: "5px 30px 5px 30px",
     borderRadius: "5px",
     color: colors.medium,

@@ -9,3 +9,11 @@ declare namespace Memo {
     entities: EntityType[];
   };
 }
+
+type KeyInfo = {
+  letter: string;
+  character: string;
+  hints: string;
+};
+
+type ControlButtonType = "memo" | "setting" | "exit" | "";

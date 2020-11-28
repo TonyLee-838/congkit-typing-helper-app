@@ -4,8 +4,7 @@ import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";
 import { createUseStyles } from "react-jss";
 import Memo from "./memo/Memo";
-
-type ControlButtonType = "memo" | "setting" | "exit" | "";
+// import dbInit from "./db/api/init";
 
 function App() {
   const classes = useStyle();
