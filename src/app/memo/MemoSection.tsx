@@ -80,7 +80,7 @@ const MemoSection: FC<MemoSectionProps> = ({
 const useStyle = createUseStyles({
   container: {
     position: "relative",
-    margin: "5px 0px 10px 0px",
+    margin: "7px 0px 7px 0px",
   },
 
   subject: {

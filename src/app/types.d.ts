@@ -16,4 +16,4 @@ type KeyInfo = {
   hints: string;
 };
 
-type ControlButtonType = "memo" | "setting" | "exit" | "";
+type ControlButtonType = "memo" | "setting" | "exit" | "search" | "";

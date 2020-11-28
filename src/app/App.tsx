@@ -4,6 +4,7 @@ import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";
 import { createUseStyles } from "react-jss";
 import Memo from "./memo/Memo";
+import SearchBox from "../search-box/SearchBox";
 // import dbInit from "./db/api/init";
 
 function App() {
@@ -29,8 +30,13 @@ function App() {
         }}
         onTransparencyKeyClick={() => setIsTransparent(!isTransparent)}
       />
-      <SideBar isExpanded={isSidebarExpanded} onSelect={handleButtonSelect} />
+      <SideBar
+        isExpanded={isSidebarExpanded}
+        onSelect={handleButtonSelect}
+        buttonSelected={buttonSelected}
+      />
       <Memo expanded={buttonSelected === "memo"} />
+      <SearchBox expanded={buttonSelected === "search"} />
     </div>
   );
 }
