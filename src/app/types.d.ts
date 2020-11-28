@@ -10,4 +10,10 @@ declare namespace Memo {
   };
 }
 
+type KeyInfo = {
+  letter: string;
+  character: string;
+  hints: string;
+};
+
 type ControlButtonType = "memo" | "setting" | "exit" | "";

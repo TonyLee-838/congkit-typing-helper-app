@@ -1,4 +1,43 @@
-const keys: KeyInfo[][] = [
+// const lowdb = require("lowdb");
+// const path = require("path");
+// const FileSync = require("lowdb/adapters/FileSync");
+// const { app, remote } = window.electron;
+
+const DbService = require("./dbService");
+
+// const STORE_PATH = remote.app.getPath("userData");
+// // if (process.type !== "renderer") {
+// //   if (!fs.pathExistsSync(STORE_PATH)) {
+// //     fs.mkdirpSync(STORE_PATH);
+// //   }
+// // }
+// const adapter = new FileSync(path.join(STORE_PATH, "/key-info.json"));
+// const db = lowdb(adapter);
+
+const db = DbService("/key-info.json");
+
+const resetKeyInfo = () => {
+  const defaultDB = DbService("key-default-info.json");
+  const defaultKeyInfo = defaultDB.get("keyInfo").value();
+
+  db.has("keyInfo").unset("keyInfo").write();
+  db.set("keyInfo", defaultKeyInfo).write();
+};
+
+const getKeyInfo = () => {
+  return db.get("keyInfo").value().default;
+};
+
+const setKeyHints = (letter, hints) => {
+  db.get("keyInfo").flatten().find({ letter }).assign({ hints }).write();
+};
+
+const setDefault = () => {
+  const db = DbService("key-default-info.json");
+  db.set("keyInfo", keys).write();
+};
+
+const keys = [
   [
     { letter: "Q", character: "手", hints: "扌㐄夫" },
     { letter: "W", character: "田", hints: "罒母黑" },
@@ -33,4 +72,9 @@ const keys: KeyInfo[][] = [
   ],
 ];
 
-export default keys;
+module.exports = {
+  resetKeyInfo,
+  getKeyInfo,
+  setKeyHints,
+  setDefault,
+};
