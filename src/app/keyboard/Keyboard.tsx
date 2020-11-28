@@ -2,7 +2,8 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 import CharacterKeys from "./CharacterKeys";
 import FunctionKey from "./FunctionKey";
-import keys from "../keyInfo";
+import { KeyInfo } from "../keyInfo";
+import { getKeyInfo } from "../db/api/keyInfo";
 interface KeyboardProps {
   listenToKeyboard: boolean;
   isTransparent: boolean;
@@ -16,10 +17,17 @@ const Keyboard = ({
   onSidebarKeyClick,
   onTransparencyKeyClick,
 }: KeyboardProps): ReactElement => {
+  const [keys, setKeys] = useState<KeyInfo[][]>([]);
   const [activeKey, setActiveKey] = useState("");
 
   const handleClearKey = () => setActiveKey("");
   const handleAddKey = (key: string) => setActiveKey(key);
+
+  //get keyboard info from local db when keyboard is initializing
+  useEffect(() => {
+    const keys = getKeyInfo();
+    setKeys(keys);
+  }, []);
 
   //register keyboard event to global document object.
   useEffect(() => {

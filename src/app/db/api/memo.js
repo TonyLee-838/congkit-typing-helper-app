@@ -1,10 +1,7 @@
-const lowdb = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
+const DbService = require("./dbService");
 
-const adapter = new FileSync("src/app/db/storage/memo.json");
-const db = lowdb(adapter);
-
-const m = [
+const db = DbService("memo.json");
+const test = [
   {
     subject: "左右結構",
     entities: [
@@ -53,7 +50,7 @@ const m = [
 
 const resetTestMemo = () => {
   db.has("memo").unset("keyInfo").write();
-  db.set("memo", m).write();
+  db.set("memo", test).write();
 };
 
 const getMemo = () => {
@@ -109,4 +106,5 @@ module.exports = {
   updateMemoSubject,
   removeMemoEntity,
   removeMemoSection,
+  resetTestMemo,
 };
