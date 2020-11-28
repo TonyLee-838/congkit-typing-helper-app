@@ -8,6 +8,7 @@ import fontFamilies from "../config/fontFamily";
 import {
   addMemoEntity,
   getMemo,
+  removeMemoEntity,
   // resetTestMemo,
   updateMemoEntity,
   updateMemoSubject,
@@ -33,12 +34,11 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
     sectionIndex: number
   ) => {
     const [char, input] = value.split(/=|＝/);
-
     // Creating new entity
     entityIndex === -1
       ? addMemoEntity({ input, char }, sectionIndex)
       : //update existing entity
-        updateMemoEntity({ char, input }, entityIndex, sectionIndex);
+        updateMemoEntity({ input, char }, entityIndex, sectionIndex);
   };
 
   const handleSectionSubjectChange = (
@@ -46,6 +46,13 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
     sectionIndex: number
   ) => {
     updateMemoSubject(subject, sectionIndex);
+  };
+
+  const handleSectionEntityDelete = (
+    entityIndex: number,
+    sectionIndex: number
+  ) => {
+    removeMemoEntity(entityIndex, sectionIndex);
   };
 
   return (
@@ -57,6 +64,9 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
               section={section}
               onSectionEntityChange={(value: string, entityIndex: number) =>
                 handleSectionEntityChange(value, entityIndex, index)
+              }
+              onSectionEntityDelete={(entityIndex: number) =>
+                handleSectionEntityDelete(entityIndex, index)
               }
               onSectionSubjectChange={(value: string) =>
                 handleSectionSubjectChange(value, index)

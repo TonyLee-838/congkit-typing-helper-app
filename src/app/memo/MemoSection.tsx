@@ -8,12 +8,14 @@ import MemoSubject from "./MemoSubject";
 interface MemoSectionProps {
   section: Memo.SectionType;
   onSectionEntityChange: Function;
+  onSectionEntityDelete: Function;
   onSectionSubjectChange: Function;
 }
 
 const MemoSection: FC<MemoSectionProps> = ({
   section,
   onSectionEntityChange,
+  onSectionEntityDelete,
   onSectionSubjectChange,
 }): ReactElement => {
   const classes = useStyle();
@@ -40,6 +42,10 @@ const MemoSection: FC<MemoSectionProps> = ({
             entity={entity}
             onClick={() => setEditIndex(index.toString())}
             onCancel={() => setEditIndex("")}
+            onDelete={() => {
+              onSectionEntityDelete(index);
+              setEditIndex("");
+            }}
             onSubmit={(value) => {
               onSectionEntityChange(value, index);
               setEditIndex("");

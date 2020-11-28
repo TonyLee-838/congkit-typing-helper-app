@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";
 import { createUseStyles } from "react-jss";
 import Memo from "./memo/Memo";
-import dbInit from "./db/api/init";
+// import dbInit from "./db/api/init";
 
 function App() {
   const classes = useStyle();

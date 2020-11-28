@@ -9,6 +9,7 @@ interface MemoEntityProps {
   onClick: React.MouseEventHandler;
   onCancel: React.MouseEventHandler;
   onSubmit: React.MouseEventHandler;
+  onDelete: React.MouseEventHandler;
 }
 
 const MemoEntity: FC<MemoEntityProps> = ({
@@ -17,6 +18,7 @@ const MemoEntity: FC<MemoEntityProps> = ({
   onClick,
   onCancel,
   onSubmit,
+  onDelete,
 }): ReactElement => {
   const classes = useStyle({ editMode });
   return editMode ? (
@@ -24,6 +26,8 @@ const MemoEntity: FC<MemoEntityProps> = ({
       initialValue={`${entity.char}＝${entity.input}`}
       onCancel={onCancel}
       onSubmit={onSubmit}
+      deleteButton
+      onDelete={onDelete}
     />
   ) : (
     <div className={classes.entity} onClick={onClick}>
