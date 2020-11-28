@@ -7,12 +7,14 @@ import colors from "../config/color";
 import fontFamilies from "../config/fontFamily";
 import {
   addMemoEntity,
+  addMemoSection,
   getMemo,
   removeMemoEntity,
   // resetTestMemo,
   updateMemoEntity,
   updateMemoSubject,
 } from "../db/api/memo";
+import MemoAddButton from "./MemoAddButton";
 import MemoSection from "./MemoSection";
 
 interface MemoProps extends ExpandableProps {}
@@ -21,6 +23,7 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
   const classes = useStyle();
 
   const [memo, setMemo] = useState<Memo.SectionType[]>([]);
+  const [additionMode, setAdditionMode] = useState(false);
 
   useEffect(() => {
     const memo = getMemo();
@@ -55,6 +58,11 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
     removeMemoEntity(entityIndex, sectionIndex);
   };
 
+  const handleSectionSubjectAdd = (subject: any) => {
+    addMemoSection(subject);
+    setAdditionMode(false);
+  };
+
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
@@ -72,9 +80,16 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
                 handleSectionSubjectChange(value, index)
               }
             />
-            {index !== memo.length - 1 && <Separator />}
+            <Separator />
           </>
         ))}
+        <MemoAddButton
+          editable={additionMode}
+          onAddButtonClick={() => setAdditionMode(true)}
+          onSubmit={handleSectionSubjectAdd}
+          onCancel={() => setAdditionMode(false)}
+          placeholder=""
+        />
       </div>
     </ExpandableDiv>
   );

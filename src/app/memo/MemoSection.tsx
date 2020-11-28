@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
+
 import MemoAddButton from "./MemoAddButton";
 import MemoControlButtons from "./MemoControlButtons";
 import MemoEntity from "./MemoEntity";
@@ -62,6 +63,7 @@ const MemoSection: FC<MemoSectionProps> = ({
               onSectionEntityChange(value, -1);
               setEditIndex("");
             }}
+            placeholder="例＝人弓"
           />
         )}
       </div>
@@ -78,7 +80,7 @@ const MemoSection: FC<MemoSectionProps> = ({
 const useStyle = createUseStyles({
   container: {
     position: "relative",
-    margin: "5px 0px 5px 0px",
+    margin: "5px 0px 10px 0px",
   },
 
   subject: {

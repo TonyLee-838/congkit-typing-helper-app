@@ -4,19 +4,21 @@ import Icon from "../common/Icon";
 import colors from "../config/color";
 
 interface MemoInputProps {
+  deleteButton?: boolean;
   initialValue?: string;
   onCancel: React.MouseEventHandler;
-  onSubmit: Function;
-  deleteButton?: boolean;
   onDelete?: React.MouseEventHandler;
+  onSubmit: Function;
+  placeholder?: string;
 }
 
 const MemoInput: FC<MemoInputProps> = ({
+  deleteButton = false,
   initialValue = "",
   onCancel,
-  onSubmit,
-  deleteButton = false,
   onDelete,
+  onSubmit,
+  placeholder = "",
 }): ReactElement => {
   const classes = useStyle();
   const [value, setValue] = useState(initialValue);
@@ -27,7 +29,7 @@ const MemoInput: FC<MemoInputProps> = ({
         value={value}
         type="text"
         className={classes.input}
-        placeholder="例＝人弓"
+        placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
       />
       <div className={classes.icons}>
