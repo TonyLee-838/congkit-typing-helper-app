@@ -1,92 +1,51 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 
 import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
 import Separator from "../common/Separator";
 import colors from "../config/color";
 import fontFamilies from "../config/fontFamily";
+import {
+  addMemoEntity,
+  getMemo,
+  // resetTestMemo,
+  updateMemoEntity,
+  updateMemoSubject,
+} from "../db/api/memo";
 import MemoSection from "./MemoSection";
-
-const fakeMemo: Memo.SectionType[] = [
-  {
-    subject: "左右結構",
-    entities: [
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-    ],
-  },
-  {
-    subject: "左右結構",
-    entities: [
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-    ],
-  },
-  {
-    subject: "左右結構",
-    entities: [
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-    ],
-  },
-  {
-    subject: "左右結構",
-    entities: [
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-      { input: "尸中", char: "聊" },
-      { input: "卜心", char: "託" },
-      { input: "竹月", char: "師" },
-    ],
-  },
-];
 
 interface MemoProps extends ExpandableProps {}
 
 const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
   const classes = useStyle();
 
-  const [memo, setMemo] = useState<Memo.SectionType[]>(fakeMemo);
+  const [memo, setMemo] = useState<Memo.SectionType[]>([]);
+
+  useEffect(() => {
+    const memo = getMemo();
+    // resetTestMemo();
+    setMemo(memo);
+  }, [memo]);
 
   const handleSectionEntityChange = (
     value: string,
     entityIndex: number,
     sectionIndex: number
   ) => {
-    const [char, input] = value.split("＝");
-    const copy = memo;
+    const [char, input] = value.split(/=|＝/);
 
     // Creating new entity
-    if (entityIndex === -1) {
-      copy[sectionIndex].entities.push({ input, char });
-    } else {
-      //update existing entity
-      copy[sectionIndex].entities[entityIndex] = { input, char };
-    }
-    setMemo(copy);
+    entityIndex === -1
+      ? addMemoEntity({ input, char }, sectionIndex)
+      : //update existing entity
+        updateMemoEntity({ char, input }, entityIndex, sectionIndex);
   };
 
-  const handleSectionSubjectChange = (value: string, index: number) => {
-    const copy = memo;
-    copy[index] = {
-      subject: value,
-      entities: copy[index].entities,
-    };
-
-    setMemo(copy);
+  const handleSectionSubjectChange = (
+    subject: string,
+    sectionIndex: number
+  ) => {
+    updateMemoSubject(subject, sectionIndex);
   };
 
   return (

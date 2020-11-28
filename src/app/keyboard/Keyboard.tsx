@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 import CharacterKeys from "./CharacterKeys";
 import FunctionKey from "./FunctionKey";
-import { KeyInfo } from "../keyInfo";
 import { getKeyInfo } from "../db/api/keyInfo";
 interface KeyboardProps {
   listenToKeyboard: boolean;

@@ -1,9 +1,3 @@
-export interface KeyInfo {
-  letter: string;
-  character: string;
-  hints: string;
-}
-
 const keys: KeyInfo[][] = [
   [
     { letter: "Q", character: "手", hints: "扌㐄夫" },
