@@ -9,3 +9,5 @@ declare namespace Memo {
     entities: EntityType[];
   };
 }
+
+type ControlButtonType = "memo" | "setting" | "exit" | "";

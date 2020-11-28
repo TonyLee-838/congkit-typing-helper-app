@@ -5,8 +5,6 @@ import Keyboard from "./keyboard/Keyboard";
 import { createUseStyles } from "react-jss";
 import Memo from "./memo/Memo";
 
-type ControlButtonType = "memo" | "setting" | "exit" | "";
-
 function App() {
   const classes = useStyle();
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
