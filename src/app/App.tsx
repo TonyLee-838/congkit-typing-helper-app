@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
-import _ from "lodash";
 
 import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";

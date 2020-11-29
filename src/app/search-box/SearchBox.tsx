@@ -14,7 +14,7 @@ interface SearchBoxProps extends ExpandableProps {
 }
 
 const SearchBox: FC<SearchBoxProps> = ({ expanded, keys }): ReactElement => {
-  const [result, setResult] = useState<SearchResultType | null>();
+  const [results, setResult] = useState<SearchResultType[]>([]);
   const [keyMap, setKeyMap] = useState<KeyMapType>({});
   const classes = useStyle();
 
@@ -22,12 +22,16 @@ const SearchBox: FC<SearchBoxProps> = ({ expanded, keys }): ReactElement => {
     setKeyMap(getKeyMap(keys));
   }, [keys]);
 
-  const handleSearch = (term: string) => {
-    const codeAlphanumeric: string[] = queryCharacter(term).split("");
-    const codeChinese = codeAlphanumeric.map(
-      (letter) => keyMap[letter.toUpperCase()]
-    );
-    setResult({ term, codeAlphanumeric, codeChinese });
+  const handleSearch = (terms: string) => {
+    const result: SearchResultType[] = [];
+    terms.split("").forEach((term) => {
+      const codeAlphanumeric: string[] = queryCharacter(term).split("");
+      const codeChinese = codeAlphanumeric.map(
+        (letter) => keyMap[letter.toUpperCase()]
+      );
+      result.push({ term, codeAlphanumeric, codeChinese });
+    });
+    setResult(result);
   };
 
   const handleAddToMemo = () => {};
@@ -38,13 +42,15 @@ const SearchBox: FC<SearchBoxProps> = ({ expanded, keys }): ReactElement => {
         <SearchInput
           onSearch={handleSearch}
           onAddToMemo={handleAddToMemo}
-          onClear={() => setResult(null)}
+          onClear={() => setResult([])}
         />
         <h3 className={classes.info}>
-          {result ? "搜尋結果:" : "請輸入要搜尋的字/詞彙:"}
+          {results.length ? "搜尋結果:" : "請輸入要搜尋的字/詞彙:"}
         </h3>
-        <div className={classes.result}>
-          {result && <SearchResult result={result} />}
+        <div className={classes.results}>
+          {results.map((result) => (
+            <SearchResult result={result} />
+          ))}
         </div>
       </div>
     </ExpandableDiv>
@@ -61,7 +67,7 @@ const useStyle = createUseStyles({
     fontFamily: fontFamilies.text,
     color: colors.dark,
   },
-  result: {
+  results: {
     overflow: "scroll",
   },
 });
