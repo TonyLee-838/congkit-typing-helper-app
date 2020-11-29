@@ -4,7 +4,7 @@ import { createUseStyles } from "react-jss";
 import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
-import { queryCharacter } from "../../db/api/dictionary";
+import { queryCharacter } from "../../../db/api/dictionary";
 import getKeyMap from "../../helper/getKeyMap";
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";

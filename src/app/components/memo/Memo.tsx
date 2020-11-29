@@ -14,7 +14,7 @@ import {
   // resetTestMemo,
   updateMemoEntity,
   updateMemoSubject,
-} from "../../db/api/memo";
+} from "../../../db/api/memo";
 import MemoAddButton from "./MemoAddButton";
 import MemoSection from "./MemoSection";
 
