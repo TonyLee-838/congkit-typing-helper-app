@@ -48,8 +48,8 @@ const SearchBox: FC<SearchBoxProps> = ({ expanded, keys }): ReactElement => {
           {results.length ? "搜尋結果:" : "請輸入要搜尋的字/詞彙:"}
         </h3>
         <div className={classes.results}>
-          {results.map((result) => (
-            <SearchResult result={result} />
+          {results.map((result, i) => (
+            <SearchResult key={i} result={result} />
           ))}
         </div>
       </div>

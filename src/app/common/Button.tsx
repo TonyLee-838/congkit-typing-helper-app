@@ -64,6 +64,7 @@ interface ButtonProps {
   label?: string;
   onClick: React.MouseEventHandler;
   theme?: ButtonTheme;
+  role?: string;
 }
 
 const Button = ({
@@ -72,10 +73,12 @@ const Button = ({
   label = "",
   onClick,
   theme = "default",
+  role,
 }: ButtonProps) => {
   const classes = useStyle({ theme, disable });
   return (
     <div
+      role={role}
       className={`${classes.container} ${className}`}
       onClick={!disable ? onClick : () => {}}
     >
