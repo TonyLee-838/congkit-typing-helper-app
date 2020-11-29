@@ -11,6 +11,7 @@ interface MemoSectionProps {
   onSectionEntityChange: Function;
   onSectionEntityDelete: Function;
   onSectionSubjectChange: Function;
+  onSectionDelete: Function;
 }
 
 const MemoSection: FC<MemoSectionProps> = ({
@@ -18,6 +19,7 @@ const MemoSection: FC<MemoSectionProps> = ({
   onSectionEntityChange,
   onSectionEntityDelete,
   onSectionSubjectChange,
+  onSectionDelete,
 }): ReactElement => {
   const classes = useStyle();
   const [editMode, setEditMode] = useState(false);
@@ -30,6 +32,10 @@ const MemoSection: FC<MemoSectionProps> = ({
         editMode={editMode && editIndex === "subject"}
         onCancel={() => setEditIndex("")}
         onClick={() => setEditIndex("subject")}
+        onDelete={() => {
+          onSectionDelete();
+          setEditIndex("");
+        }}
         onSubmit={(value) => {
           onSectionSubjectChange(value);
           setEditIndex("");

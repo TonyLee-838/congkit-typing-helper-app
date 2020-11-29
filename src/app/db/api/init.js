@@ -1,4 +1,4 @@
-const keys = require("../../keyInfo");
+const keys = require("./defaultkeyInfo.ts");
 const DbService = require("./dbService");
 
 // This init script should only be executed once at user's first installation.
@@ -14,7 +14,11 @@ const dbInit = () => {
   const memoDb = DbService("memo.json");
   memoDb.defaults({ memo: [] }).write();
 
-  console.log("Db initialized!");
+  const congkitDb = DbService("congkit-dictionary.json");
+  const congkit = require("./congkit5_TC.json");
+  congkitDb.defaults({ dict: congkit }).write();
+
+  console.info("Local Database initialized!");
 };
 
 module.exports = dbInit;

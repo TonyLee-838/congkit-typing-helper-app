@@ -1,20 +1,34 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
-import Button from "../app/common/Button";
-import colors from "../app/config/color";
+import Button from "../common/Button";
+import colors from "../config/color";
+import fontFamilies from "../config/fontFamily";
 
-interface SearchInputProps {}
+interface SearchInputProps {
+  onSearch: Function;
+  onAddToMemo: Function;
+}
 
-const SearchInput: FC<SearchInputProps> = (props): ReactElement => {
+const SearchInput: FC<SearchInputProps> = ({
+  onSearch,
+  onAddToMemo,
+}): ReactElement => {
   const classes = useStyle();
+  const [value, setValue] = useState("");
+
   return (
     <div className={classes.container}>
-      <input type="text" className={classes.input} />
+      <input
+        value={value}
+        type="text"
+        className={classes.input}
+        onChange={(e) => setValue(e.target.value)}
+      />
       <div className={classes.buttons}>
         <Button
           className={classes.button}
           label="Search"
-          onClick={() => {}}
+          onClick={() => onSearch(value)}
           theme="info"
         />
         <Button
@@ -37,8 +51,11 @@ const useStyle = createUseStyles({
   input: {
     borderRadius: "3px",
     boxShadow: "0px 0px 3px" + colors.dark,
-    width: "50%",
+    width: "45%",
     height: "30px",
+    fontFamily: fontFamilies.text,
+    fontSize: "1.25rem",
+    margin: "0px 5px 0px 5px",
   },
   buttons: {
     width: "max-content",

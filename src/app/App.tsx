@@ -4,7 +4,7 @@ import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";
 import { createUseStyles } from "react-jss";
 import Memo from "./memo/Memo";
-import SearchBox from "../search-box/SearchBox";
+import SearchBox from "./search-box/SearchBox";
 // import dbInit from "./db/api/init";
 
 function App() {
@@ -18,6 +18,10 @@ function App() {
       ? setButtonSelected("")
       : setButtonSelected(button);
   };
+
+  // useEffect(() => {
+  //   dbInit();
+  // }, []);
 
   return (
     <div className={`App ${classes.container} `}>
