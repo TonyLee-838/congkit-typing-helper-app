@@ -1,4 +1,4 @@
-const DbService = require("./dbService");
+const { DbService } = require("./dbService");
 
 const db = DbService("/key-info.json");
 
@@ -11,7 +11,7 @@ const resetKeyInfo = () => {
 };
 
 const getKeyInfo = () => {
-  return db.get("keyInfo").value().default;
+  return db.get("keyInfo").value();
 };
 
 const setKeyHints = (letter, hints) => {

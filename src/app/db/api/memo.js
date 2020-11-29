@@ -1,4 +1,4 @@
-const DbService = require("./dbService");
+const { DbService } = require("./dbService");
 
 const db = DbService("memo.json");
 const test = [

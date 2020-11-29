@@ -12,4 +12,4 @@ console.log("STORE_PATH: ", STORE_PATH);
 const DbService = (fileName) =>
   lowdb(new FileSync(path.join(STORE_PATH, "/", fileName)));
 
-module.exports = DbService;
+module.exports = { DbService, STORE_PATH };

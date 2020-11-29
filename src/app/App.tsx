@@ -6,6 +6,7 @@ import Keyboard from "./keyboard/Keyboard";
 import Memo from "./memo/Memo";
 import SearchBox from "./search-box/SearchBox";
 import { getKeyInfo } from "./db/api/keyInfo";
+import generateIfFileMissing from "./db/api/init";
 // import dbInit from "./db/api/init";
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
 
   //get keyboard info from local db when keyboard is initializing
   useEffect(() => {
+    generateIfFileMissing();
+
     const keys = getKeyInfo();
     setKeys(keys);
   }, []);

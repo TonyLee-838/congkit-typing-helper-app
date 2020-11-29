@@ -72,24 +72,25 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
-        {memo.map((section, index) => (
-          <>
-            <MemoSection
-              section={section}
-              onSectionEntityChange={(value: string, entityIndex: number) =>
-                handleSectionEntityChange(value, entityIndex, index)
-              }
-              onSectionEntityDelete={(entityIndex: number) =>
-                handleSectionEntityDelete(entityIndex, index)
-              }
-              onSectionSubjectChange={(value: string) =>
-                handleSectionSubjectChange(value, index)
-              }
-              onSectionDelete={() => handleSectionDelete(index)}
-            />
-            <Separator />
-          </>
-        ))}
+        {memo &&
+          memo.map((section, index) => (
+            <>
+              <MemoSection
+                section={section}
+                onSectionEntityChange={(value: string, entityIndex: number) =>
+                  handleSectionEntityChange(value, entityIndex, index)
+                }
+                onSectionEntityDelete={(entityIndex: number) =>
+                  handleSectionEntityDelete(entityIndex, index)
+                }
+                onSectionSubjectChange={(value: string) =>
+                  handleSectionSubjectChange(value, index)
+                }
+                onSectionDelete={() => handleSectionDelete(index)}
+              />
+              <Separator />
+            </>
+          ))}
         <MemoAddButton
           editable={additionMode}
           onAddButtonClick={() => setAdditionMode(true)}
