@@ -1,9 +1,9 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import Icon from "../common/Icon";
-import colors from "../config/color";
+import colors from "../../config/color";
 
-import fontFamilies from "../config/fontFamily";
+import fontFamilies from "../../config/fontFamily";
 
 interface SearchResultProps {
   result: SearchResultType;

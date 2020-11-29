@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
-import colors from "../config/color";
-import fontFamilies from "../config/fontFamily";
+import colors from "../../config/color";
+import fontFamilies from "../../config/fontFamily";
 
 interface HintBoxProps {
   hints: string[];

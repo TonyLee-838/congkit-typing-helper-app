@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { createUseStyles } from "react-jss";
-import fontFamilies from "../config/fontFamily";
+import fontFamilies from "../../config/fontFamily";
 import Icon from "../common/Icon";
 import Key, { KeyProps } from "./Key";
 

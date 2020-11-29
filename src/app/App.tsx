@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 
-import SideBar from "./sidebar/SideBar";
-import Keyboard from "./keyboard/Keyboard";
-import Memo from "./memo/Memo";
-import SearchBox from "./search-box/SearchBox";
+import SideBar from "./components/sidebar/SideBar";
+import Keyboard from "./components/keyboard/Keyboard";
+import Memo from "./components/memo/Memo";
+import SearchBox from "./components/search-box/SearchBox";
 import { getKeyInfo } from "./db/api/keyInfo";
 import generateIfFileMissing from "./db/api/init";
 // import dbInit from "./db/api/init";

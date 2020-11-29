@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
-import colors from "../config/color";
+import colors from "../../config/color";
 import MemoInput from "./MemoInput";
 
 interface MemoEntityProps {

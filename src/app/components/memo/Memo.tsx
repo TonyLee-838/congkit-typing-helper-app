@@ -3,8 +3,8 @@ import { createUseStyles } from "react-jss";
 
 import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
 import Separator from "../common/Separator";
-import colors from "../config/color";
-import fontFamilies from "../config/fontFamily";
+import colors from "../../config/color";
+import fontFamilies from "../../config/fontFamily";
 import {
   addMemoEntity,
   addMemoSection,
@@ -14,7 +14,7 @@ import {
   // resetTestMemo,
   updateMemoEntity,
   updateMemoSubject,
-} from "../db/api/memo";
+} from "../../db/api/memo";
 import MemoAddButton from "./MemoAddButton";
 import MemoSection from "./MemoSection";
 

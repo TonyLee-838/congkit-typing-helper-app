@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
 import Button from "../common/Button";
-import colors from "../config/color";
-import fontFamilies from "../config/fontFamily";
+import colors from "../../config/color";
+import fontFamilies from "../../config/fontFamily";
 
 interface SearchInputProps {
   onSearch: Function;
