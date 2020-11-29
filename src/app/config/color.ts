@@ -8,6 +8,7 @@ const colors = {
   red: "#e32c4f",
   green: "#027c0a",
   black: "#1c1b1b",
+  success: "#04c932",
 };
 
 export default colors;

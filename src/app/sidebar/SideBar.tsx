@@ -7,9 +7,14 @@ import Icon from "../common/Icon";
 interface SideBarProps {
   isExpanded: boolean;
   onSelect: Function;
+  buttonSelected: ControlButtonType;
 }
 
-const SideBar: FC<SideBarProps> = ({ isExpanded, onSelect }): ReactElement => {
+const SideBar: FC<SideBarProps> = ({
+  isExpanded,
+  onSelect,
+  buttonSelected,
+}): ReactElement => {
   const classes = useStyle({ isExpanded });
   return (
     <div className={classes.container}>
@@ -17,6 +22,11 @@ const SideBar: FC<SideBarProps> = ({ isExpanded, onSelect }): ReactElement => {
         name="BsBookmarksFill"
         className={classes.icon}
         onClick={() => onSelect("memo")}
+      />
+      <Icon
+        name="BsSearch"
+        className={`${classes.icon} ${classes.searchIcon} `}
+        onClick={() => onSelect("search")}
       />
       <Icon name="BsGearFill" className={classes.icon} />
       <Icon name="BsPower" className={`${classes.icon} ${classes.exitIcon} `} />
@@ -35,17 +45,25 @@ const useStyle = createUseStyles({
     borderTopLeftRadius: "5px",
     borderBottomLeftRadius: "5px",
     boxShadow: "3px 3px 3.5px" + colors.dark,
+
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
   },
+
   icon: {
-    padding: "20px 10px 20px 10px",
+    padding: "10px",
     fontSize: ({ isExpanded }) => (isExpanded ? "1.5rem" : "0"),
-    transition: "font-size 300ms ease-in-out, color 100ms ease ",
+    transition: "font-size 300ms ease-in-out, color 150ms ease ",
     cursor: "pointer",
     "&:hover": {
       color: colors.lightBlue,
+    },
+  },
+  searchIcon: {
+    "&:hover": {
+      color: colors.green,
     },
   },
   exitIcon: {

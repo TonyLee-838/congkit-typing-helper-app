@@ -10,6 +10,7 @@ import {
   addMemoSection,
   getMemo,
   removeMemoEntity,
+  removeMemoSection,
   // resetTestMemo,
   updateMemoEntity,
   updateMemoSubject,
@@ -63,6 +64,11 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
     setAdditionMode(false);
   };
 
+  const handleSectionDelete = (sectionIndex: number) => {
+    removeMemoSection(sectionIndex);
+    setMemo(memo.filter((_, i) => i !== sectionIndex));
+  };
+
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
@@ -79,6 +85,7 @@ const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
               onSectionSubjectChange={(value: string) =>
                 handleSectionSubjectChange(value, index)
               }
+              onSectionDelete={() => handleSectionDelete(index)}
             />
             <Separator />
           </>

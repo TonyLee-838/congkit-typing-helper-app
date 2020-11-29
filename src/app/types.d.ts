@@ -16,4 +16,14 @@ type KeyInfo = {
   hints: string;
 };
 
-type ControlButtonType = "memo" | "setting" | "exit" | "";
+type KeyMapType = {
+  [index: string]: string;
+};
+
+type SearchResultType = {
+  term: string;
+  codeChinese: string[];
+  codeAlphanumeric: string[];
+};
+
+type ControlButtonType = "memo" | "setting" | "exit" | "search" | "";

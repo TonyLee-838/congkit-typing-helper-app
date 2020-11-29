@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { createUseStyles } from "react-jss";
 
 import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";
-import { createUseStyles } from "react-jss";
 import Memo from "./memo/Memo";
+import SearchBox from "./search-box/SearchBox";
+import { getKeyInfo } from "./db/api/keyInfo";
 // import dbInit from "./db/api/init";
 
 function App() {
@@ -11,6 +13,14 @@ function App() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [isTransparent, setIsTransparent] = useState(true);
   const [buttonSelected, setButtonSelected] = useState<ControlButtonType>("");
+
+  const [keys, setKeys] = useState<KeyInfo[][]>([]);
+
+  //get keyboard info from local db when keyboard is initializing
+  useEffect(() => {
+    const keys = getKeyInfo();
+    setKeys(keys);
+  }, []);
 
   const handleButtonSelect = (button: ControlButtonType) => {
     button === buttonSelected
@@ -21,6 +31,7 @@ function App() {
   return (
     <div className={`App ${classes.container} `}>
       <Keyboard
+        keys={keys}
         isTransparent={isTransparent}
         listenToKeyboard={!buttonSelected}
         onSidebarKeyClick={() => {
@@ -29,8 +40,13 @@ function App() {
         }}
         onTransparencyKeyClick={() => setIsTransparent(!isTransparent)}
       />
-      <SideBar isExpanded={isSidebarExpanded} onSelect={handleButtonSelect} />
+      <SideBar
+        isExpanded={isSidebarExpanded}
+        onSelect={handleButtonSelect}
+        buttonSelected={buttonSelected}
+      />
       <Memo expanded={buttonSelected === "memo"} />
+      <SearchBox expanded={buttonSelected === "search"} keys={keys} />
     </div>
   );
 }

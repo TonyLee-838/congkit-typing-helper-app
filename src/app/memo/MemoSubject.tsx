@@ -7,6 +7,7 @@ interface MemoSubjectProps {
   editMode: boolean;
   onClick: React.MouseEventHandler;
   onCancel: React.MouseEventHandler;
+  onDelete: React.MouseEventHandler;
   onSubmit: React.MouseEventHandler;
 }
 
@@ -15,11 +16,18 @@ const MemoSubject: FC<MemoSubjectProps> = ({
   editMode,
   onClick,
   onCancel,
+  onDelete,
   onSubmit,
 }): ReactElement => {
   const classes = useStyle();
   return editMode ? (
-    <MemoInput initialValue={subject} onCancel={onCancel} onSubmit={onSubmit} />
+    <MemoInput
+      initialValue={subject}
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      deleteButton
+      onDelete={onDelete}
+    />
   ) : (
     <h3 className={classes.subject} onClick={onClick}>
       {subject}

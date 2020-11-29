@@ -41,7 +41,7 @@ const useStyle = createUseStyles({
     justifyContent: "center",
     alignItems: "center",
     width: "max-content",
-    margin: "5px",
+    margin: "4px 0px 2px 0px",
     padding: "5px 30px 5px 30px",
     borderRadius: "5px",
     color: colors.medium,
