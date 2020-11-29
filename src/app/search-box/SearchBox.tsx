@@ -14,7 +14,7 @@ interface SearchBoxProps extends ExpandableProps {
 }
 
 const SearchBox: FC<SearchBoxProps> = ({ expanded, keys }): ReactElement => {
-  const [result, setResult] = useState<SearchResultType>();
+  const [result, setResult] = useState<SearchResultType | null>();
   const [keyMap, setKeyMap] = useState<KeyMapType>({});
   const classes = useStyle();
 
@@ -35,11 +35,16 @@ const SearchBox: FC<SearchBoxProps> = ({ expanded, keys }): ReactElement => {
   return (
     <ExpandableDiv expanded={expanded}>
       <div className={classes.container}>
-        <SearchInput onSearch={handleSearch} onAddToMemo={handleAddToMemo} />
-        <h3 className={classes.info}>搜尋結果:</h3>
+        <SearchInput
+          onSearch={handleSearch}
+          onAddToMemo={handleAddToMemo}
+          onClear={() => setResult(null)}
+        />
+        <h3 className={classes.info}>
+          {result ? "搜尋結果:" : "請輸入要搜尋的字/詞彙:"}
+        </h3>
         <div className={classes.result}>
           {result && <SearchResult result={result} />}
-          {/* {result && <SearchResult result={result} />} */}
         </div>
       </div>
     </ExpandableDiv>

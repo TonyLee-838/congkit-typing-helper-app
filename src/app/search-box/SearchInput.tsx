@@ -7,11 +7,13 @@ import fontFamilies from "../config/fontFamily";
 interface SearchInputProps {
   onSearch: Function;
   onAddToMemo: Function;
+  onClear: Function;
 }
 
 const SearchInput: FC<SearchInputProps> = ({
   onSearch,
   onAddToMemo,
+  onClear,
 }): ReactElement => {
   const classes = useStyle();
   const [value, setValue] = useState("");
@@ -33,9 +35,12 @@ const SearchInput: FC<SearchInputProps> = ({
         />
         <Button
           className={classes.button}
-          label="Add"
-          onClick={() => {}}
-          theme="success"
+          label="Clear"
+          onClick={() => {
+            onClear();
+            setValue("");
+          }}
+          theme="warning"
         />
       </div>
     </div>
@@ -64,7 +69,7 @@ const useStyle = createUseStyles({
     alignItems: "center",
   },
   button: {
-    margin: "0px 5px 0px 5px",
+    margin: "0px 3px 0px 3px",
     height: "",
   },
 });
