@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { createUseStyles } from "react-jss";
+import _ from "lodash";
 
 import SideBar from "./sidebar/SideBar";
 import Keyboard from "./keyboard/Keyboard";
-import { createUseStyles } from "react-jss";
 import Memo from "./memo/Memo";
 import SearchBox from "./search-box/SearchBox";
+import { getKeyInfo } from "./db/api/keyInfo";
 // import dbInit from "./db/api/init";
 
 function App() {
@@ -13,19 +15,24 @@ function App() {
   const [isTransparent, setIsTransparent] = useState(true);
   const [buttonSelected, setButtonSelected] = useState<ControlButtonType>("");
 
+  const [keys, setKeys] = useState<KeyInfo[][]>([]);
+
+  //get keyboard info from local db when keyboard is initializing
+  useEffect(() => {
+    const keys = getKeyInfo();
+    setKeys(keys);
+  }, []);
+
   const handleButtonSelect = (button: ControlButtonType) => {
     button === buttonSelected
       ? setButtonSelected("")
       : setButtonSelected(button);
   };
 
-  // useEffect(() => {
-  //   dbInit();
-  // }, []);
-
   return (
     <div className={`App ${classes.container} `}>
       <Keyboard
+        keys={keys}
         isTransparent={isTransparent}
         listenToKeyboard={!buttonSelected}
         onSidebarKeyClick={() => {
@@ -40,7 +47,7 @@ function App() {
         buttonSelected={buttonSelected}
       />
       <Memo expanded={buttonSelected === "memo"} />
-      <SearchBox expanded={buttonSelected === "search"} />
+      <SearchBox expanded={buttonSelected === "search"} keys={keys} />
     </div>
   );
 }
