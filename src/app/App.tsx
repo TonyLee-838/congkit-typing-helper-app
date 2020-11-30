@@ -21,7 +21,6 @@ function App() {
   //get keyboard info from local db when keyboard is initializing
   useEffect(() => {
     generateIfFileMissing();
-
     const keys = getKeyInfo();
     setKeys(keys);
   }, []);
