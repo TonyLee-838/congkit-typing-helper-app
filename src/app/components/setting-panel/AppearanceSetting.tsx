@@ -12,6 +12,8 @@ const AppearanceSetting: FC<AppearanceSettingProps> = (props): ReactElement => {
     <SettingSection subject="Appearance">
       <>
         <ToggleInput label="Transparency:" />
+        <ToggleInput label="Transparency:" />
+        <RangeInput label="Transparency:" max={1} min={0.2} />
         <RangeInput label="Transparency:" max={1} min={0.2} />
       </>
     </SettingSection>

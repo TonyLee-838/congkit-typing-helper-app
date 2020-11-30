@@ -31,11 +31,11 @@ const useStyle = createUseStyles({
     "& *": {
       transition: "all 400ms ease",
     },
+    position: "relative",
   },
   input: {
     width: "50px",
     height: "25px",
-    position: "relative",
     display: "inline-block",
     borderRadius: "13px",
     backgroundColor: ({ active }) =>
@@ -44,9 +44,10 @@ const useStyle = createUseStyles({
   },
   slider: {
     position: "absolute",
-    left: "14.5px",
     height: "24px",
     width: "24px",
+    top: "0px",
+    left: "0px",
     borderRadius: "12px",
     backgroundColor: colors.white,
     boxShadow: "2px 2px 1px" + colors.dark,
