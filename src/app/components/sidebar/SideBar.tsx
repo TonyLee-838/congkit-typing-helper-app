@@ -28,7 +28,11 @@ const SideBar: FC<SideBarProps> = ({
         className={`${classes.icon} ${classes.searchIcon} `}
         onClick={() => onSelect("search")}
       />
-      <Icon name="BsGearFill" className={classes.icon} />
+      <Icon
+        name="BsGearFill"
+        className={classes.icon}
+        onClick={() => onSelect("setting")}
+      />
       <Icon name="BsPower" className={`${classes.icon} ${classes.exitIcon} `} />
     </div>
   );

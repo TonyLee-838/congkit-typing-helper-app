@@ -7,6 +7,7 @@ import Memo from "./components/memo/Memo";
 import SearchBox from "./components/search-box/SearchBox";
 import { getKeyInfo } from "../db/api/keyInfo";
 import generateIfFileMissing from "../db/api/init";
+import SettingPanel from "./components/setting-panel/SettingPanel";
 // import dbInit from "./db/api/init";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
       />
       <Memo expanded={buttonSelected === "memo"} />
       <SearchBox expanded={buttonSelected === "search"} keys={keys} />
+      <SettingPanel expanded={buttonSelected === "setting"} />
     </div>
   );
 }
