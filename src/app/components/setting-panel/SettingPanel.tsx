@@ -28,8 +28,6 @@ const SettingPanel: FC<SettingPanelProps> = ({ expanded }): ReactElement => {
         <Separator />
         <div className={classes.container}>
           <AppearanceSetting />
-          <AppearanceSetting />
-          <AppearanceSetting />
         </div>
       </div>
     </ExpandableDiv>
