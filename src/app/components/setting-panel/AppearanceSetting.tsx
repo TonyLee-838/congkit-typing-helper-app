@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 import RangeInput from "./RangeInput";
 import SettingSection from "./SettingSection";
 import ToggleInput from "./ToggleInput";
-import { ConfigContext } from "../../stores/configContext";
+import { ConfigContext } from "../../stores/context";
 
 interface AppearanceSettingProps {}
 

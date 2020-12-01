@@ -1,12 +1,12 @@
-import { action } from "mobx";
-import { observer } from "mobx-react-lite";
 import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
-import { KeyContext } from "../../stores/keyContext";
-import FunctionKeys from "./FunctionKeys";
+import { action } from "mobx";
+import { observer } from "mobx-react-lite";
 
+import FunctionKeys from "./FunctionKeys";
 import HintBox from "./HintBox";
 import Key from "./Key";
+import { KeyContext } from "../../stores/context";
 
 const CharacterKeys: FC = observer(
   (): ReactElement => {

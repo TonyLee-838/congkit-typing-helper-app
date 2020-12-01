@@ -14,7 +14,7 @@ import { queryCharacter } from "../../../db/api/dictionary";
 import getKeyMap from "../../helper/getKeyMap";
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
-import { KeyContext } from "../../stores/keyContext";
+import { KeyContext } from "../../stores/context";
 
 interface SearchBoxProps extends ExpandableProps {}
 

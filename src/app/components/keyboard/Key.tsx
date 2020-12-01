@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
-import { ConfigContext } from "../../stores/configContext";
+import { ConfigContext } from "../../stores/context";
 
 export type KeyProps = {
   onActivate: Function;

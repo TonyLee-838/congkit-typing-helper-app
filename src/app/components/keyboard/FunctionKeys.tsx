@@ -1,12 +1,11 @@
-import { action } from "mobx";
 import React, { useContext } from "react";
 import { createUseStyles } from "react-jss";
+import { action } from "mobx";
 
-import fontFamilies from "../../config/fontFamily";
-import { ConfigContext } from "../../stores/configContext";
-import { KeyContext } from "../../stores/keyContext";
 import Icon from "../common/Icon";
 import Key from "./Key";
+import { KeyContext, ConfigContext } from "../../stores/context";
+import fontFamilies from "../../config/fontFamily";
 
 const FunctionKeys = () => {
   const classes = useStyle();

@@ -1,8 +1,9 @@
-import { action } from "mobx";
-import { observer } from "mobx-react-lite";
 import React, { ReactElement, useContext, useEffect } from "react";
 import { createUseStyles } from "react-jss";
-import { KeyContext } from "../../stores/keyContext";
+import { action } from "mobx";
+import { observer } from "mobx-react-lite";
+
+import { KeyContext } from "../../stores/context";
 import CharacterKeys from "./CharacterKeys";
 interface KeyboardProps {
   listenToKeyboard: boolean;

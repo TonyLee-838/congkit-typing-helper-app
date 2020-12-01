@@ -7,10 +7,7 @@ import Memo from "./components/memo/Memo";
 import SearchBox from "./components/search-box/SearchBox";
 import generateIfFileMissing from "../db/api/init";
 import SettingPanel from "./components/setting-panel/SettingPanel";
-import { ConfigContext } from "./stores/configContext";
-import { ConfigStore } from "./stores/configStore";
-import { KeyContext } from "./stores/keyContext";
-import { KeyStore } from "./stores/keyStore";
+import ContextProvider from "./stores/context";
 
 function App() {
   const classes = useStyle();
@@ -30,24 +27,22 @@ function App() {
 
   return (
     <div className={`App ${classes.container} `}>
-      <ConfigContext.Provider value={new ConfigStore()}>
-        <KeyContext.Provider value={new KeyStore()}>
-          <Keyboard
-            listenToKeyboard={!buttonSelected}
-            onSidebarKeyClick={() => {
-              setIsSidebarExpanded(!isSidebarExpanded);
-            }}
-          />
-          <SideBar
-            isExpanded={isSidebarExpanded}
-            onSelect={handleButtonSelect}
-            buttonSelected={buttonSelected}
-          />
-          <Memo expanded={buttonSelected === "memo"} />
-          <SearchBox expanded={buttonSelected === "search"} />
-          <SettingPanel expanded={buttonSelected === "setting"} />
-        </KeyContext.Provider>
-      </ConfigContext.Provider>
+      <ContextProvider>
+        <Keyboard
+          listenToKeyboard={!buttonSelected}
+          onSidebarKeyClick={() => {
+            setIsSidebarExpanded(!isSidebarExpanded);
+          }}
+        />
+        <SideBar
+          isExpanded={isSidebarExpanded}
+          onSelect={handleButtonSelect}
+          buttonSelected={buttonSelected}
+        />
+        <Memo expanded={buttonSelected === "memo"} />
+        <SearchBox expanded={buttonSelected === "search"} />
+        <SettingPanel expanded={buttonSelected === "setting"} />
+      </ContextProvider>
     </div>
   );
 }
