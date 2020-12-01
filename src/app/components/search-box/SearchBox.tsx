@@ -1,4 +1,10 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, {
+  FC,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { createUseStyles } from "react-jss";
 
 import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
@@ -8,19 +14,19 @@ import { queryCharacter } from "../../../db/api/dictionary";
 import getKeyMap from "../../helper/getKeyMap";
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
+import { KeyContext } from "../../stores/keyContext";
 
-interface SearchBoxProps extends ExpandableProps {
-  keys: KeyInfo[][];
-}
+interface SearchBoxProps extends ExpandableProps {}
 
-const SearchBox: FC<SearchBoxProps> = ({ expanded, keys }): ReactElement => {
+const SearchBox: FC<SearchBoxProps> = ({ expanded }): ReactElement => {
   const [results, setResult] = useState<SearchResultType[]>([]);
   const [keyMap, setKeyMap] = useState<KeyMapType>({});
+  const keyStore = useContext(KeyContext);
   const classes = useStyle();
 
   useEffect(() => {
-    setKeyMap(getKeyMap(keys));
-  }, [keys]);
+    setKeyMap(getKeyMap(keyStore.keyInfo));
+  }, [keyStore.keyInfo]);
 
   const handleSearch = (terms: string) => {
     const result: SearchResultType[] = [];

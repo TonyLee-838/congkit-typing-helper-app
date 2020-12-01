@@ -1,76 +1,39 @@
 import { action } from "mobx";
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
+import React, { ReactElement, useContext, useEffect } from "react";
 import { createUseStyles } from "react-jss";
-import { ConfigContext } from "../../stores/configContext";
+import { KeyContext } from "../../stores/keyContext";
 import CharacterKeys from "./CharacterKeys";
-import FunctionKey from "./FunctionKey";
 interface KeyboardProps {
-  keys: KeyInfo[][];
   listenToKeyboard: boolean;
   onSidebarKeyClick: Function;
 }
 
-const Keyboard = ({
-  keys,
-  listenToKeyboard,
-  onSidebarKeyClick,
-}: KeyboardProps): ReactElement => {
-  const [activeKey, setActiveKey] = useState("");
+const Keyboard = observer(
+  ({ listenToKeyboard, onSidebarKeyClick }: KeyboardProps): ReactElement => {
+    const keyStore = useContext(KeyContext);
+    const { activeKey } = keyStore;
 
-  const configStore = useContext(ConfigContext);
+    //register keyboard event to global document object.
+    useEffect(() => {
+      if (listenToKeyboard) {
+        document.onkeydown = action((ev: any) => keyStore.setActiveKey(ev.key));
+        document.onkeyup = action(() => keyStore.setActiveKey(""));
+      } else {
+        document.onkeydown = null;
+        document.onkeyup = null;
+      }
+    }, [listenToKeyboard]);
 
-  const handleClearKey = () => setActiveKey("");
-  const handleAddKey = (key: string) => setActiveKey(key);
+    const classes = useStyle({ activeKey });
 
-  //register keyboard event to global document object.
-  useEffect(() => {
-    if (listenToKeyboard) {
-      document.onkeydown = (ev) => handleAddKey(ev.key);
-      document.onkeyup = handleClearKey;
-    } else {
-      document.onkeydown = null;
-      document.onkeyup = null;
-    }
-  }, [listenToKeyboard]);
-
-  const classes = useStyle({ activeKey });
-
-  const FunctionKeys = () => (
-    <div className={classes.functionKeys}>
-      <FunctionKey
-        isActive={activeKey === "Trans"}
-        icon={"BsEyeFill"}
-        onActivate={() => handleAddKey("Trans")}
-        onDeactivate={action(() => {
-          configStore.toggleTransparent();
-          handleClearKey();
-        })}
-      />
-      <FunctionKey
-        isActive={activeKey === "Expand"}
-        icon={"BsLayoutSidebarInsetReverse"}
-        onActivate={() => handleAddKey("Expand")}
-        onDeactivate={() => {
-          onSidebarKeyClick();
-          handleClearKey();
-        }}
-      />
-    </div>
-  );
-
-  return (
-    <div className={classes.container}>
-      <CharacterKeys
-        keys={keys}
-        activeKey={activeKey}
-        // isTransparent={isTransparent}
-        onSetActiveKey={handleAddKey}
-        onClearActiveKey={handleClearKey}
-        FunctionKeys={FunctionKeys}
-      />
-    </div>
-  );
-};
+    return (
+      <div className={classes.container}>
+        <CharacterKeys />
+      </div>
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   container: {

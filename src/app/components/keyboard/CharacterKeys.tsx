@@ -1,53 +1,50 @@
-import React, { FC, ReactElement } from "react";
+import { action } from "mobx";
+import { observer } from "mobx-react-lite";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
+import { KeyContext } from "../../stores/keyContext";
+import FunctionKeys from "./FunctionKeys";
 
 import HintBox from "./HintBox";
 import Key from "./Key";
 
-interface CharacterKeysProps {
-  keys: KeyInfo[][];
-  activeKey: string;
-  onSetActiveKey: Function;
-  onClearActiveKey: Function;
-  FunctionKeys: () => JSX.Element;
-}
+const CharacterKeys: FC = observer(
+  (): ReactElement => {
+    const classes = useKeysStyle();
+    const keyStore = useContext(KeyContext);
+    const { keyInfo, activeKey } = keyStore;
 
-const CharacterKeys: FC<CharacterKeysProps> = ({
-  FunctionKeys,
-  keys,
-  activeKey,
-  onSetActiveKey,
-  onClearActiveKey,
-}): ReactElement => {
-  const classes = useKeysStyle();
-  return (
-    <div className={classes.container}>
-      {keys.map((col, index) => (
-        <div className={classes.keyboardColumn}>
-          {col.map((key) => (
-            <div className={classes.characterKeys}>
-              <Key
-                isActive={activeKey.toUpperCase() === key.letter}
-                onActivate={() => onSetActiveKey(key.letter.toUpperCase())}
-                onDeactivate={onClearActiveKey}
-              >
-                <>
-                  <div className={classes.letter}>{key.letter}</div>
-                  <div className={classes.character}>{key.character}</div>
-                </>
-              </Key>
+    return (
+      <div className={classes.container}>
+        {keyInfo.map((col, index) => (
+          <div className={classes.keyboardColumn}>
+            {col.map((key) => (
+              <div className={classes.characterKeys}>
+                <Key
+                  isActive={activeKey.toUpperCase() === key.letter}
+                  onActivate={action(() =>
+                    keyStore.setActiveKey(key.letter.toUpperCase())
+                  )}
+                  onDeactivate={action(() => keyStore.clearActiveKey())}
+                >
+                  <>
+                    <div className={classes.letter}>{key.letter}</div>
+                    <div className={classes.character}>{key.character}</div>
+                  </>
+                </Key>
 
-              {activeKey.toUpperCase() === key.letter && (
-                <HintBox hints={key.hints.split("")} />
-              )}
-            </div>
-          ))}
-          {index === keys.length - 1 && <FunctionKeys />}
-        </div>
-      ))}
-    </div>
-  );
-};
+                {activeKey.toUpperCase() === key.letter && (
+                  <HintBox hints={key.hints.split("")} />
+                )}
+              </div>
+            ))}
+            {index === keyInfo.length - 1 && <FunctionKeys />}
+          </div>
+        ))}
+      </div>
+    );
+  }
+);
 
 const useKeysStyle = createUseStyles({
   container: {

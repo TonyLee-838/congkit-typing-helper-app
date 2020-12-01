@@ -22,7 +22,6 @@ const SettingSection: FC<SettingSectionProps> = ({
 
 const useStyle = createUseStyles({
   container: {
-    // backgroundColor: "red",
     padding: "5px",
     fontFamily: fontFamilies.text,
   },
