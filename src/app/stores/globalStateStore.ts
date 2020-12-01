@@ -4,6 +4,7 @@ export class GlobalStateStore {
   isSidebarExpanded: boolean = false;
   isListeningToKeyboard: boolean = true;
   isTransparent: boolean = true;
+  selectedButton: ControlButtonType = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -11,13 +12,14 @@ export class GlobalStateStore {
 
   toggleSidebarExpansion() {
     this.isSidebarExpanded = !this.isSidebarExpanded;
-  }
-
-  setListenToKeyboard(isListeningToKeyboard: boolean) {
-    this.isListeningToKeyboard = isListeningToKeyboard;
+    this.isListeningToKeyboard = !this.isSidebarExpanded;
   }
 
   toggleTransparent() {
     this.isTransparent = !this.isTransparent;
+  }
+
+  setSelectedButton(button: ControlButtonType) {
+    this.selectedButton = this.selectedButton === button ? "" : button;
   }
 }

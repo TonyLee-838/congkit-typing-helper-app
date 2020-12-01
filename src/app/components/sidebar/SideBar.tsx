@@ -1,47 +1,51 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
+import { action } from "mobx";
+import { observer } from "mobx-react-lite";
+
+import { terminateApp } from "../../remote";
 
 import Icon from "../common/Icon";
 import colors from "../../config/color";
-import { terminateApp } from "../../remote";
+import { GlobalStateContext } from "../../stores/context";
 
-interface SideBarProps {
-  isExpanded: boolean;
-  onSelect: Function;
-  buttonSelected: ControlButtonType;
-}
+const SideBar: FC = observer(
+  (): ReactElement => {
+    const globalStateStore = useContext(GlobalStateContext);
 
-const SideBar: FC<SideBarProps> = ({
-  isExpanded,
-  onSelect,
-  buttonSelected,
-}): ReactElement => {
-  const classes = useStyle({ isExpanded });
-  return (
-    <div className={classes.container}>
-      <Icon
-        name="BsBookmarksFill"
-        className={classes.icon}
-        onClick={() => onSelect("memo")}
-      />
-      <Icon
-        name="BsSearch"
-        className={`${classes.icon} ${classes.searchIcon} `}
-        onClick={() => onSelect("search")}
-      />
-      <Icon
-        name="BsGearFill"
-        className={classes.icon}
-        onClick={() => onSelect("setting")}
-      />
-      <Icon
-        name="BsPower"
-        className={`${classes.icon} ${classes.exitIcon} `}
-        onClick={() => terminateApp()}
-      />
-    </div>
-  );
-};
+    const classes = useStyle({
+      isExpanded: globalStateStore.isSidebarExpanded,
+    });
+
+    const handleSelect = (button: ControlButtonType) =>
+      action(() => globalStateStore.setSelectedButton(button));
+
+    return (
+      <div className={classes.container}>
+        <Icon
+          name="BsBookmarksFill"
+          className={classes.icon}
+          onClick={handleSelect("memo")}
+        />
+        <Icon
+          name="BsSearch"
+          className={`${classes.icon} ${classes.searchIcon} `}
+          onClick={handleSelect("search")}
+        />
+        <Icon
+          name="BsGearFill"
+          className={classes.icon}
+          onClick={handleSelect("setting")}
+        />
+        <Icon
+          name="BsPower"
+          className={`${classes.icon} ${classes.exitIcon} `}
+          onClick={() => terminateApp()}
+        />
+      </div>
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   container: {

@@ -7,61 +7,65 @@ import React, {
 } from "react";
 import { createUseStyles } from "react-jss";
 
-import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
+import ExpandableDiv from "../common/ExpandableDiv";
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
 import { queryCharacter } from "../../../db/api/dictionary";
 import getKeyMap from "../../helper/getKeyMap";
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
-import { KeyContext } from "../../stores/context";
+import { GlobalStateContext, KeyContext } from "../../stores/context";
+import { observer } from "mobx-react-lite";
 
-interface SearchBoxProps extends ExpandableProps {}
+const SearchBox: FC = observer(
+  (): ReactElement => {
+    const [results, setResult] = useState<SearchResultType[]>([]);
+    const [keyMap, setKeyMap] = useState<KeyMapType>({});
 
-const SearchBox: FC<SearchBoxProps> = ({ expanded }): ReactElement => {
-  const [results, setResult] = useState<SearchResultType[]>([]);
-  const [keyMap, setKeyMap] = useState<KeyMapType>({});
-  const keyStore = useContext(KeyContext);
-  const classes = useStyle();
+    const keyStore = useContext(KeyContext);
+    const globalStateStore = useContext(GlobalStateContext);
 
-  useEffect(() => {
-    setKeyMap(getKeyMap(keyStore.keyInfo));
-  }, [keyStore.keyInfo]);
+    const classes = useStyle();
 
-  const handleSearch = (terms: string) => {
-    const result: SearchResultType[] = [];
-    terms.split("").forEach((term) => {
-      const codeAlphanumeric: string[] = queryCharacter(term).split("");
-      const codeChinese = codeAlphanumeric.map(
-        (letter) => keyMap[letter.toUpperCase()]
-      );
-      result.push({ term, codeAlphanumeric, codeChinese });
-    });
-    setResult(result);
-  };
+    useEffect(() => {
+      setKeyMap(getKeyMap(keyStore.keyInfo));
+    }, [keyStore.keyInfo]);
 
-  const handleAddToMemo = () => {};
+    const handleSearch = (terms: string) => {
+      const result: SearchResultType[] = [];
+      terms.split("").forEach((term) => {
+        const codeAlphanumeric: string[] = queryCharacter(term).split("");
+        const codeChinese = codeAlphanumeric.map(
+          (letter) => keyMap[letter.toUpperCase()]
+        );
+        result.push({ term, codeAlphanumeric, codeChinese });
+      });
+      setResult(result);
+    };
 
-  return (
-    <ExpandableDiv expanded={expanded}>
-      <div className={classes.container}>
-        <SearchInput
-          onSearch={handleSearch}
-          onAddToMemo={handleAddToMemo}
-          onClear={() => setResult([])}
-        />
-        <h3 className={classes.info}>
-          {results.length ? "搜尋結果:" : "請輸入要搜尋的字/詞彙:"}
-        </h3>
-        <div className={classes.results}>
-          {results.map((result, i) => (
-            <SearchResult key={i} result={result} />
-          ))}
+    const handleAddToMemo = () => {};
+
+    return (
+      <ExpandableDiv expanded={globalStateStore.selectedButton === "search"}>
+        <div className={classes.container}>
+          <SearchInput
+            onSearch={handleSearch}
+            onAddToMemo={handleAddToMemo}
+            onClear={() => setResult([])}
+          />
+          <h3 className={classes.info}>
+            {results.length ? "搜尋結果:" : "請輸入要搜尋的字/詞彙:"}
+          </h3>
+          <div className={classes.results}>
+            {results.map((result, i) => (
+              <SearchResult key={i} result={result} />
+            ))}
+          </div>
         </div>
-      </div>
-    </ExpandableDiv>
-  );
-};
+      </ExpandableDiv>
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   container: {

@@ -3,28 +3,26 @@ import { createUseStyles } from "react-jss";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 
-import { KeyContext } from "../../stores/context";
 import CharacterKeys from "./CharacterKeys";
-interface KeyboardProps {
-  listenToKeyboard: boolean;
-  onSidebarKeyClick: Function;
-}
+import { GlobalStateContext, KeyContext } from "../../stores/context";
 
 const Keyboard = observer(
-  ({ listenToKeyboard, onSidebarKeyClick }: KeyboardProps): ReactElement => {
+  (): ReactElement => {
     const keyStore = useContext(KeyContext);
+    const globalStateStore = useContext(GlobalStateContext);
     const { activeKey } = keyStore;
+    const { isListeningToKeyboard } = globalStateStore;
 
     //register keyboard event to global document object.
     useEffect(() => {
-      if (listenToKeyboard) {
+      if (isListeningToKeyboard) {
         document.onkeydown = action((ev: any) => keyStore.setActiveKey(ev.key));
         document.onkeyup = action(() => keyStore.setActiveKey(""));
       } else {
         document.onkeydown = null;
         document.onkeyup = null;
       }
-    }, [listenToKeyboard]);
+    }, [isListeningToKeyboard, keyStore]);
 
     const classes = useStyle({ activeKey });
 

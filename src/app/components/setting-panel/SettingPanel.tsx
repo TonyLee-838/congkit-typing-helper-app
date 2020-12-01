@@ -1,12 +1,12 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
-import colors from "../../config/color";
-import fontFamilies from "../../config/fontFamily";
-import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
+
+import ExpandableDiv from "../common/ExpandableDiv";
 import Separator from "../common/Separator";
 import AppearanceSetting from "./AppearanceSetting";
-
-interface SettingPanelProps extends ExpandableProps {}
+import fontFamilies from "../../config/fontFamily";
+import colors from "../../config/color";
+import { GlobalStateContext } from "../../stores/context";
 
 /**
  * Appearance setting:
@@ -19,10 +19,13 @@ interface SettingPanelProps extends ExpandableProps {}
  * 2. customize hints
  */
 
-const SettingPanel: FC<SettingPanelProps> = ({ expanded }): ReactElement => {
+const SettingPanel: FC = (): ReactElement => {
   const classes = useStyle();
+
+  const globalStateStore = useContext(GlobalStateContext);
+
   return (
-    <ExpandableDiv expanded={expanded}>
+    <ExpandableDiv expanded={globalStateStore.selectedButton === "setting"}>
       <div>
         <h3 className={classes.heading}>Setting</h3>
         <Separator />

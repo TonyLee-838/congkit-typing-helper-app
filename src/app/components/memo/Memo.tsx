@@ -1,10 +1,13 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, {
+  FC,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { createUseStyles } from "react-jss";
+import { observer } from "mobx-react-lite";
 
-import ExpandableDiv, { ExpandableProps } from "../common/ExpandableDiv";
-import Separator from "../common/Separator";
-import colors from "../../config/color";
-import fontFamilies from "../../config/fontFamily";
 import {
   addMemoEntity,
   addMemoSection,
@@ -15,93 +18,101 @@ import {
   updateMemoEntity,
   updateMemoSubject,
 } from "../../../db/api/memo";
+
+import ExpandableDiv from "../common/ExpandableDiv";
+import Separator from "../common/Separator";
 import MemoAddButton from "./MemoAddButton";
 import MemoSection from "./MemoSection";
+import colors from "../../config/color";
+import fontFamilies from "../../config/fontFamily";
+import { GlobalStateContext } from "../../stores/context";
 
-interface MemoProps extends ExpandableProps {}
+const Memo: FC = observer(
+  (): ReactElement => {
+    const classes = useStyle();
 
-const Memo: FC<MemoProps> = ({ expanded }): ReactElement => {
-  const classes = useStyle();
+    const globalStateStore = useContext(GlobalStateContext);
 
-  const [memo, setMemo] = useState<Memo.SectionType[]>([]);
-  const [additionMode, setAdditionMode] = useState(false);
+    const [memo, setMemo] = useState<Memo.SectionType[]>([]);
+    const [additionMode, setAdditionMode] = useState(false);
 
-  useEffect(() => {
-    const memo = getMemo();
-    // resetTestMemo();
-    setMemo(memo);
-  }, [memo]);
+    useEffect(() => {
+      const memo = getMemo();
+      // resetTestMemo();
+      setMemo(memo);
+    }, [memo]);
 
-  const handleSectionEntityChange = (
-    value: string,
-    entityIndex: number,
-    sectionIndex: number
-  ) => {
-    const [char, input] = value.split(/=|＝/);
-    // Creating new entity
-    entityIndex === -1
-      ? addMemoEntity({ input, char }, sectionIndex)
-      : //update existing entity
-        updateMemoEntity({ input, char }, entityIndex, sectionIndex);
-  };
+    const handleSectionEntityChange = (
+      value: string,
+      entityIndex: number,
+      sectionIndex: number
+    ) => {
+      const [char, input] = value.split(/=|＝/);
+      // Creating new entity
+      entityIndex === -1
+        ? addMemoEntity({ input, char }, sectionIndex)
+        : //update existing entity
+          updateMemoEntity({ input, char }, entityIndex, sectionIndex);
+    };
 
-  const handleSectionSubjectChange = (
-    subject: string,
-    sectionIndex: number
-  ) => {
-    updateMemoSubject(subject, sectionIndex);
-  };
+    const handleSectionSubjectChange = (
+      subject: string,
+      sectionIndex: number
+    ) => {
+      updateMemoSubject(subject, sectionIndex);
+    };
 
-  const handleSectionEntityDelete = (
-    entityIndex: number,
-    sectionIndex: number
-  ) => {
-    removeMemoEntity(entityIndex, sectionIndex);
-  };
+    const handleSectionEntityDelete = (
+      entityIndex: number,
+      sectionIndex: number
+    ) => {
+      removeMemoEntity(entityIndex, sectionIndex);
+    };
 
-  const handleSectionSubjectAdd = (subject: any) => {
-    addMemoSection(subject);
-    setAdditionMode(false);
-  };
+    const handleSectionSubjectAdd = (subject: any) => {
+      addMemoSection(subject);
+      setAdditionMode(false);
+    };
 
-  const handleSectionDelete = (sectionIndex: number) => {
-    removeMemoSection(sectionIndex);
-    setMemo(memo.filter((_, i) => i !== sectionIndex));
-  };
+    const handleSectionDelete = (sectionIndex: number) => {
+      removeMemoSection(sectionIndex);
+      setMemo(memo.filter((_, i) => i !== sectionIndex));
+    };
 
-  return (
-    <ExpandableDiv expanded={expanded}>
-      <div className={classes.container}>
-        {memo &&
-          memo.map((section, index) => (
-            <>
-              <MemoSection
-                section={section}
-                onSectionEntityChange={(value: string, entityIndex: number) =>
-                  handleSectionEntityChange(value, entityIndex, index)
-                }
-                onSectionEntityDelete={(entityIndex: number) =>
-                  handleSectionEntityDelete(entityIndex, index)
-                }
-                onSectionSubjectChange={(value: string) =>
-                  handleSectionSubjectChange(value, index)
-                }
-                onSectionDelete={() => handleSectionDelete(index)}
-              />
-              <Separator />
-            </>
-          ))}
-        <MemoAddButton
-          editable={additionMode}
-          onAddButtonClick={() => setAdditionMode(true)}
-          onSubmit={handleSectionSubjectAdd}
-          onCancel={() => setAdditionMode(false)}
-          placeholder=""
-        />
-      </div>
-    </ExpandableDiv>
-  );
-};
+    return (
+      <ExpandableDiv expanded={globalStateStore.selectedButton === "memo"}>
+        <div className={classes.container}>
+          {memo &&
+            memo.map((section, index) => (
+              <>
+                <MemoSection
+                  section={section}
+                  onSectionEntityChange={(value: string, entityIndex: number) =>
+                    handleSectionEntityChange(value, entityIndex, index)
+                  }
+                  onSectionEntityDelete={(entityIndex: number) =>
+                    handleSectionEntityDelete(entityIndex, index)
+                  }
+                  onSectionSubjectChange={(value: string) =>
+                    handleSectionSubjectChange(value, index)
+                  }
+                  onSectionDelete={() => handleSectionDelete(index)}
+                />
+                <Separator />
+              </>
+            ))}
+          <MemoAddButton
+            editable={additionMode}
+            onAddButtonClick={() => setAdditionMode(true)}
+            onSubmit={handleSectionSubjectAdd}
+            onCancel={() => setAdditionMode(false)}
+            placeholder=""
+          />
+        </div>
+      </ExpandableDiv>
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   container: {
