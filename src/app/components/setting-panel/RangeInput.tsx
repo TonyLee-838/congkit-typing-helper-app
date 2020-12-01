@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 
 interface RangeInputProps {
@@ -19,7 +19,6 @@ const RangeInput: FC<RangeInputProps> = ({
   value,
 }): ReactElement => {
   const classes = useStyle();
-  //   const [value, setValue] = useState(min);
   return (
     <div className={classes.container}>
       <label className={classes.label}>{label}</label>

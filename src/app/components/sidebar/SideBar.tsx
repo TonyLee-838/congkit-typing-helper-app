@@ -1,8 +1,9 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 
-import colors from "../../config/color";
 import Icon from "../common/Icon";
+import colors from "../../config/color";
+import { terminateApp } from "../../remote";
 
 interface SideBarProps {
   isExpanded: boolean;
@@ -33,7 +34,11 @@ const SideBar: FC<SideBarProps> = ({
         className={classes.icon}
         onClick={() => onSelect("setting")}
       />
-      <Icon name="BsPower" className={`${classes.icon} ${classes.exitIcon} `} />
+      <Icon
+        name="BsPower"
+        className={`${classes.icon} ${classes.exitIcon} `}
+        onClick={() => terminateApp()}
+      />
     </div>
   );
 };
