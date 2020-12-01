@@ -1,4 +1,6 @@
 import { makeAutoObservable } from "mobx";
+import { getConfig, updateConfig } from "../../db/api/config";
+
 export class ConfigStore {
   darkMode: boolean = false;
   transparency: number = 0.5;
@@ -10,11 +12,16 @@ export class ConfigStore {
   }
 
   // Call when store initializes.
-  private getConfigFromDBAndUpdate() {}
+  private getConfigFromDBAndUpdate() {
+    const { mode, transparency } = getConfig("appearance");
+    this.darkMode = mode;
+    this.transparency = transparency;
+  }
 
   setDarkMode(value: boolean) {
     this.darkMode = value;
     console.log(this.darkMode);
+    updateConfig("appearance.mode", value);
     //push updated config to db.
   }
 
@@ -22,6 +29,7 @@ export class ConfigStore {
     this.transparency = value;
     console.log(this.transparency);
     //push updated config to db.
+    updateConfig("appearance.transparency", value);
   }
 
   toggleTransparent() {
