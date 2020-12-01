@@ -1,63 +1,36 @@
-import React, {
-  FC,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
+import { observer } from "mobx-react-lite";
+import { action } from "mobx";
 
+import SearchInput from "./SearchInput";
+import SearchResult from "./SearchResult";
 import ExpandableDiv from "../common/ExpandableDiv";
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
-import { queryCharacter } from "../../../db/api/dictionary";
-import getKeyMap from "../../helper/getKeyMap";
-import SearchInput from "./SearchInput";
-import SearchResult from "./SearchResult";
-import { GlobalStateContext, KeyContext } from "../../stores/context";
-import { observer } from "mobx-react-lite";
+import { GlobalStateContext, SearchContext } from "../../stores/context";
 
 const SearchBox: FC = observer(
   (): ReactElement => {
-    const [results, setResult] = useState<SearchResultType[]>([]);
-    const [keyMap, setKeyMap] = useState<KeyMapType>({});
-
-    const keyStore = useContext(KeyContext);
     const globalStateStore = useContext(GlobalStateContext);
+    const searchStore = useContext(SearchContext);
 
     const classes = useStyle();
-
-    useEffect(() => {
-      setKeyMap(getKeyMap(keyStore.keyInfo));
-    }, [keyStore.keyInfo]);
-
-    const handleSearch = (terms: string) => {
-      const result: SearchResultType[] = [];
-      terms.split("").forEach((term) => {
-        const codeAlphanumeric: string[] = queryCharacter(term).split("");
-        const codeChinese = codeAlphanumeric.map(
-          (letter) => keyMap[letter.toUpperCase()]
-        );
-        result.push({ term, codeAlphanumeric, codeChinese });
-      });
-      setResult(result);
-    };
-
     const handleAddToMemo = () => {};
 
     return (
       <ExpandableDiv expanded={globalStateStore.selectedButton === "search"}>
         <div className={classes.container}>
           <SearchInput
-            onSearch={handleSearch}
+            onSearch={action((value: string) => searchStore.search(value))}
             onAddToMemo={handleAddToMemo}
-            onClear={() => setResult([])}
+            onClear={action(() => searchStore.clear())}
           />
           <h3 className={classes.info}>
-            {results.length ? "搜尋結果:" : "請輸入要搜尋的字/詞彙:"}
+            {searchStore.hasNoResult() ? "請輸入要搜尋的字/詞彙:" : "搜尋結果:"}
           </h3>
           <div className={classes.results}>
-            {results.map((result, i) => (
+            {searchStore.results.map((result, i) => (
               <SearchResult key={i} result={result} />
             ))}
           </div>
