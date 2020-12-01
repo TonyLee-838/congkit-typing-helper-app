@@ -109,6 +109,12 @@ const useStyle = createUseStyles({
     padding: "10px",
     fontFamily: fontFamilies.text,
   },
+  heading: {
+    margin: "5px 5px 5px 10px",
+    fontFamily: fontFamilies.text,
+    color: colors.dark,
+    fontStyle: "italic",
+  },
   subject: {
     margin: 0,
   },

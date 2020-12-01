@@ -18,7 +18,7 @@ const SearchInput: FC<SearchInputProps> = ({
   const classes = useStyle();
   const [value, setValue] = useState("");
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleEnterKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") onSearch(value);
   };
 
@@ -29,7 +29,7 @@ const SearchInput: FC<SearchInputProps> = ({
         type="text"
         className={classes.input}
         onChange={(e) => setValue(e.target.value)}
-        onKeyPress={handleKeyPress}
+        onKeyPress={handleEnterKeyPress}
       />
       <div className={classes.buttons}>
         <Button

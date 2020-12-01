@@ -23,6 +23,10 @@ const MemoInput: FC<MemoInputProps> = ({
   const classes = useStyle();
   const [value, setValue] = useState(initialValue);
 
+  const handleEnterKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") onSubmit(value);
+  };
+
   return (
     <div className={classes.container}>
       <input
@@ -31,6 +35,7 @@ const MemoInput: FC<MemoInputProps> = ({
         className={classes.input}
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
+        onKeyPress={handleEnterKeyPress}
       />
       <div className={classes.icons}>
         <Icon name="BsX" className={classes.cancelIcon} onClick={onCancel} />
