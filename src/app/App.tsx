@@ -8,12 +8,13 @@ import SearchBox from "./components/search-box/SearchBox";
 import { getKeyInfo } from "../db/api/keyInfo";
 import generateIfFileMissing from "../db/api/init";
 import SettingPanel from "./components/setting-panel/SettingPanel";
+import { ConfigContext } from "./stores/configContext";
+import { ConfigStore } from "./stores/configStore";
 // import dbInit from "./db/api/init";
 
 function App() {
   const classes = useStyle();
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-  const [isTransparent, setIsTransparent] = useState(true);
   const [buttonSelected, setButtonSelected] = useState<ControlButtonType>("");
 
   const [keys, setKeys] = useState<KeyInfo[][]>([]);
@@ -33,24 +34,23 @@ function App() {
 
   return (
     <div className={`App ${classes.container} `}>
-      <Keyboard
-        keys={keys}
-        isTransparent={isTransparent}
-        listenToKeyboard={!buttonSelected}
-        onSidebarKeyClick={() => {
-          setIsSidebarExpanded(!isSidebarExpanded);
-          setIsTransparent(false);
-        }}
-        onTransparencyKeyClick={() => setIsTransparent(!isTransparent)}
-      />
-      <SideBar
-        isExpanded={isSidebarExpanded}
-        onSelect={handleButtonSelect}
-        buttonSelected={buttonSelected}
-      />
-      <Memo expanded={buttonSelected === "memo"} />
-      <SearchBox expanded={buttonSelected === "search"} keys={keys} />
-      <SettingPanel expanded={buttonSelected === "setting"} />
+      <ConfigContext.Provider value={new ConfigStore()}>
+        <Keyboard
+          keys={keys}
+          listenToKeyboard={!buttonSelected}
+          onSidebarKeyClick={() => {
+            setIsSidebarExpanded(!isSidebarExpanded);
+          }}
+        />
+        <SideBar
+          isExpanded={isSidebarExpanded}
+          onSelect={handleButtonSelect}
+          buttonSelected={buttonSelected}
+        />
+        <Memo expanded={buttonSelected === "memo"} />
+        <SearchBox expanded={buttonSelected === "search"} keys={keys} />
+        <SettingPanel expanded={buttonSelected === "setting"} />
+      </ConfigContext.Provider>
     </div>
   );
 }

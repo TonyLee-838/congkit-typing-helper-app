@@ -9,7 +9,6 @@ interface FunctionKeyProp extends KeyProps {
 }
 
 const FunctionKey = ({
-  isTransparent,
   icon,
   isActive,
   onActivate,
@@ -21,7 +20,6 @@ const FunctionKey = ({
     <Key
       onActivate={onActivate}
       onDeactivate={onDeactivate}
-      isTransparent={isTransparent}
       isActive={isActive}
       className={classes.container}
     >

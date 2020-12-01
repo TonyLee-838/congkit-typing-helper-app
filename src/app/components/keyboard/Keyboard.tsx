@@ -1,23 +1,23 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import { action } from "mobx";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
+import { ConfigContext } from "../../stores/configContext";
 import CharacterKeys from "./CharacterKeys";
 import FunctionKey from "./FunctionKey";
 interface KeyboardProps {
   keys: KeyInfo[][];
   listenToKeyboard: boolean;
-  isTransparent: boolean;
   onSidebarKeyClick: Function;
-  onTransparencyKeyClick: Function;
 }
 
 const Keyboard = ({
   keys,
   listenToKeyboard,
-  isTransparent,
   onSidebarKeyClick,
-  onTransparencyKeyClick,
 }: KeyboardProps): ReactElement => {
   const [activeKey, setActiveKey] = useState("");
+
+  const configStore = useContext(ConfigContext);
 
   const handleClearKey = () => setActiveKey("");
   const handleAddKey = (key: string) => setActiveKey(key);
@@ -40,17 +40,15 @@ const Keyboard = ({
       <FunctionKey
         isActive={activeKey === "Trans"}
         icon={"BsEyeFill"}
-        isTransparent={isTransparent}
         onActivate={() => handleAddKey("Trans")}
-        onDeactivate={() => {
-          onTransparencyKeyClick();
+        onDeactivate={action(() => {
+          configStore.toggleTransparent();
           handleClearKey();
-        }}
+        })}
       />
       <FunctionKey
         isActive={activeKey === "Expand"}
         icon={"BsLayoutSidebarInsetReverse"}
-        isTransparent={isTransparent}
         onActivate={() => handleAddKey("Expand")}
         onDeactivate={() => {
           onSidebarKeyClick();
@@ -65,7 +63,7 @@ const Keyboard = ({
       <CharacterKeys
         keys={keys}
         activeKey={activeKey}
-        isTransparent={isTransparent}
+        // isTransparent={isTransparent}
         onSetActiveKey={handleAddKey}
         onClearActiveKey={handleClearKey}
         FunctionKeys={FunctionKeys}
