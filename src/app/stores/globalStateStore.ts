@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-export class GlobalStateStore {
+class GlobalStateStore {
   isSidebarExpanded: boolean = false;
   isListeningToKeyboard: boolean = true;
   isTransparent: boolean = true;
@@ -23,3 +23,5 @@ export class GlobalStateStore {
     this.selectedButton = this.selectedButton === button ? "" : button;
   }
 }
+
+export default GlobalStateStore;

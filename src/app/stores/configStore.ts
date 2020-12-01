@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { getConfig, updateConfig } from "../../db/api/config";
 
-export class ConfigStore {
+class ConfigStore {
   darkMode: boolean = false;
   transparency: number = 0.5;
   isTransparent: boolean = false;
@@ -37,3 +37,5 @@ export class ConfigStore {
     console.log("this.isTransparent", this.isTransparent);
   }
 }
+
+export default ConfigStore;

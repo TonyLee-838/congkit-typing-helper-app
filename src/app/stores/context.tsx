@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
-import { GlobalStateStore } from "./globalStateStore";
-import { KeyStore } from "./keyStore";
-import { ConfigStore } from "./configStore";
-import { SearchStore } from "./searchStore";
+import GlobalStateStore from "./globalStateStore";
+import KeyStore from "./keyStore";
+import ConfigStore from "./configStore";
+import SearchStore from "./searchStore";
 
 const globalStateStore = new GlobalStateStore();
 const keyStore = new KeyStore();

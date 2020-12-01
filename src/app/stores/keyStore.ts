@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 import { getKeyInfo } from "../../db/api/keyInfo";
 
-export class KeyStore {
+class KeyStore {
   keyInfo: KeyInfo[][];
   activeKey: string = "";
   listenToKeyboard: boolean = true;
@@ -29,3 +29,5 @@ export class KeyStore {
     //talk to db...
   }
 }
+
+export default KeyStore;

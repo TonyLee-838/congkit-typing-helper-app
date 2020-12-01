@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import { KeyStore } from "./keyStore";
-import getKeyMap from "../helper/getKeyMap";
-import { queryCharacter } from "../../db/api/dictionary";
 
-export class SearchStore {
+import { queryCharacter } from "../../db/api/dictionary";
+import KeyStore from "./keyStore";
+import getKeyMap from "../helper/getKeyMap";
+class SearchStore {
   keyMap;
   terms: string = "";
   results: SearchResultType[] = [];
@@ -37,3 +37,5 @@ export class SearchStore {
     this.results = results;
   }
 }
+
+export default SearchStore;

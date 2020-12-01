@@ -9,7 +9,7 @@ import {
   updateMemoSubject,
 } from "../../db/api/memo";
 
-export class MemoStore {
+class MemoStore {
   memo: Memo.SectionType[] = [];
   editSectionIndex: string = "";
   editEntityIndex: string = "";
@@ -71,3 +71,5 @@ export class MemoStore {
     this.memo = getMemo();
   }
 }
+
+export default MemoStore;

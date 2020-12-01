@@ -5,8 +5,8 @@ import SideBar from "./components/sidebar/SideBar";
 import Keyboard from "./components/keyboard/Keyboard";
 import Memo from "./components/memo/Memo";
 import SearchBox from "./components/search-box/SearchBox";
-import generateIfFileMissing from "../db/api/init";
 import SettingPanel from "./components/setting-panel/SettingPanel";
+import generateIfFileMissing from "../db/api/init";
 import ContextProvider from "./stores/context";
 
 function App() {
