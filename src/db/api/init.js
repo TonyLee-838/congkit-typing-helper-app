@@ -4,6 +4,7 @@ const path = window.path;
 const { DbService, STORE_PATH } = require("./dbService");
 const { keyInfo } = require("../resource/key-default-info.json");
 const congkit = require("../resource/congkit5_TC.json");
+const config = require("../resource/default-config.json");
 
 // This init script should only be executed once at user's first installation.
 const initializeDb = () => {
@@ -19,6 +20,9 @@ const initializeDb = () => {
   const congkitDb = DbService("congkit-dictionary.json");
   congkitDb.defaults({ dict: congkit }).write();
 
+  const configDb = DbService("app-config.json");
+  configDb.defaults(config).write();
+
   console.info("Local Database initialized!");
 };
 
@@ -28,6 +32,7 @@ const allDbFilesExist = () => {
     "key-info.json",
     "memo.json",
     "congkit-dictionary.json",
+    "app-config.json",
   ];
   return PATHS.every((PATH) => fs.existsSync(path.join(STORE_PATH, "/", PATH)));
 };

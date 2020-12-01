@@ -19,6 +19,7 @@ const createWindow = () => {
   mainWindow.loadURL("http://localhost:3010");
   if (process.platform === "darwin") mainWindow.setAutoHideMenuBar(true);
 
+
   globalShortcut.register("Alt+Shift+W", () => {
     const { x, y } = screen.getCursorScreenPoint();
     mainWindow.setPosition(x, y);

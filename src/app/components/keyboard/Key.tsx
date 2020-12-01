@@ -1,5 +1,6 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
+import { getConfig } from "../../../db/api/config";
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
 
@@ -11,6 +12,8 @@ export type KeyProps = {
   className?: string;
 };
 
+const TRANSPARENCY_PATH = "appearance.transparency";
+
 const Key: FC<KeyProps> = ({
   className,
   children,
@@ -19,6 +22,12 @@ const Key: FC<KeyProps> = ({
   isActive,
   isTransparent,
 }): ReactElement => {
+  const [transparency, setTransparency] = useState(
+    getConfig(TRANSPARENCY_PATH)
+  );
+
+  const classes = useStyle({ isActive, isTransparent, transparency });
+
   const handleMouseDown = () => {
     onActivate();
   };
@@ -26,7 +35,10 @@ const Key: FC<KeyProps> = ({
     onDeactivate();
   };
 
-  const classes = useStyle({ isActive, isTransparent });
+  useEffect(() => {
+    setTransparency(getConfig(TRANSPARENCY_PATH));
+  }, [isTransparent]);
+
   return (
     <div
       className={`${classes.container} ${className} `}
@@ -45,8 +57,8 @@ const useStyle = createUseStyles({
     color: ({ isActive }) => (isActive ? colors.white : colors.black),
     boxShadow: "3px 3px 2px " + colors.dark,
     borderRadius: "5px",
-    opacity: ({ isActive, isTransparent }) =>
-      isTransparent ? (isActive ? 1 : 0.45) : 1,
+    opacity: ({ isActive, isTransparent, transparency }) =>
+      isTransparent ? (isActive ? 1 : transparency) : 1,
     width: "60%",
     height: "60%",
 
