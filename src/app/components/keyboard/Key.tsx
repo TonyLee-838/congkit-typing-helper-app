@@ -1,8 +1,7 @@
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
 import { observer } from "mobx-react-lite";
 
-import { getConfig } from "../../../db/api/config";
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
 import { ConfigContext } from "../../stores/configContext";
@@ -15,8 +14,6 @@ export type KeyProps = {
   children?: ReactElement;
 };
 
-const TRANSPARENCY_PATH = "appearance.transparency";
-
 const Key = observer(
   ({
     className,
@@ -25,11 +22,7 @@ const Key = observer(
     onDeactivate,
     isActive,
   }: KeyProps): ReactElement => {
-    const [transparency, setTransparency] = useState(
-      getConfig(TRANSPARENCY_PATH)
-    );
-
-    const { isTransparent } = useContext(ConfigContext);
+    const { isTransparent, transparency } = useContext(ConfigContext);
 
     const classes = useStyle({ isActive, isTransparent, transparency });
 
@@ -39,10 +32,6 @@ const Key = observer(
     const handleMouseUp = () => {
       onDeactivate();
     };
-
-    useEffect(() => {
-      setTransparency(getConfig(TRANSPARENCY_PATH));
-    }, [isTransparent]);
 
     return (
       <div

@@ -1,40 +1,40 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
-import { getConfig, updateConfig } from "../../../db/api/config";
+import { action } from "mobx";
+import { observer } from "mobx-react-lite";
+
 import RangeInput from "./RangeInput";
 import SettingSection from "./SettingSection";
 import ToggleInput from "./ToggleInput";
+import { ConfigContext } from "../../stores/configContext";
 
 interface AppearanceSettingProps {}
 
-const AppearanceSetting: FC<AppearanceSettingProps> = (props): ReactElement => {
-  const classes = useStyle();
+const AppearanceSetting: FC<AppearanceSettingProps> = observer(
+  (props): ReactElement => {
+    const classes = useStyle();
 
-  const [transparency, setTransparency] = useState<number>(
-    parseFloat(getConfig("appearance.transparency"))
-  );
+    const configStore = useContext(ConfigContext);
 
-  const handleChangeTransparency = (value: number) => {
-    updateConfig("appearance.transparency", value);
-    setTransparency(value);
-  };
-
-  return (
-    <SettingSection subject="Appearance">
-      <>
-        <ToggleInput label="Dark Mode:" />
-        <RangeInput
-          label="Transparency:"
-          max={1}
-          min={0.2}
-          step={0.05}
-          value={transparency}
-          onChange={handleChangeTransparency}
-        />
-      </>
-    </SettingSection>
-  );
-};
+    return (
+      <SettingSection subject="Appearance">
+        <>
+          <ToggleInput label="Dark Mode:" />
+          <RangeInput
+            label="Transparency:"
+            max={1}
+            min={0.2}
+            step={0.05}
+            value={configStore.transparency}
+            onChange={action((value: number) =>
+              configStore.setTransparency(value)
+            )}
+          />
+        </>
+      </SettingSection>
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   container: {},

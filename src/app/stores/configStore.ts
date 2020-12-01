@@ -1,4 +1,4 @@
-import { makeAutoObservable, autorun, runInAction } from "mobx";
+import { makeAutoObservable } from "mobx";
 export class ConfigStore {
   darkMode: boolean = false;
   transparency: number = 0.5;
