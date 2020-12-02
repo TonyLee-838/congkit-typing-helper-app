@@ -7,7 +7,7 @@ const colors = {
   darkBlue: "#0f3253",
   red: "#e32c4f",
   green: "#027c0a",
-  black: "#1c1b1b",
+  black: "#202020",
   success: "#04c932",
 };
 

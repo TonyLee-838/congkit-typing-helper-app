@@ -4,7 +4,8 @@ import { observer } from "mobx-react-lite";
 
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
-import { ConfigContext } from "../../stores/context";
+import { ConfigContext, GlobalStateContext } from "../../stores/context";
+import theme from "../../config/theme";
 
 export type KeyProps = {
   onActivate: Function;
@@ -22,9 +23,14 @@ const Key = observer(
     onDeactivate,
     isActive,
   }: KeyProps): ReactElement => {
-    const { isTransparent, transparency } = useContext(ConfigContext);
+    const { isTransparent, transparency, darkMode } = useContext(ConfigContext);
 
-    const classes = useStyle({ isActive, isTransparent, transparency });
+    const { active, dark, light, container } = useStyle({
+      isActive,
+      isTransparent,
+      transparency,
+      darkMode,
+    });
 
     const handleMouseDown = () => {
       onActivate();
@@ -33,9 +39,13 @@ const Key = observer(
       onDeactivate();
     };
 
+    const classNames = ` ${container} ${darkMode ? dark : light} ${
+      isActive ? active : ""
+    } ${className}`;
+
     return (
       <div
-        className={`${classes.container} ${className} `}
+        className={classNames}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       >
@@ -47,9 +57,6 @@ const Key = observer(
 
 const useStyle = createUseStyles({
   container: {
-    backgroundColor: ({ isActive }) =>
-      isActive ? colors.lightBlue : colors.light,
-    color: ({ isActive }) => (isActive ? colors.white : colors.black),
     boxShadow: "3px 3px 2px " + colors.dark,
     borderRadius: "5px",
     opacity: ({ isActive, isTransparent, transparency }) =>
@@ -66,6 +73,14 @@ const useStyle = createUseStyles({
       fontWeight: "bolder",
       fontFamily: fontFamilies.text,
     },
+  },
+
+  dark: theme.dark,
+  light: theme.light,
+  active: {
+    backgroundColor: colors.lightBlue,
+    color: colors.white,
+    opacity: 1,
   },
 });
 

@@ -1,7 +1,9 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
 
 import colors from "../../config/color";
+import theme from "../../config/theme";
+import { ConfigContext } from "../../stores/context";
 
 export interface ExpandableProps {
   expanded: boolean;
@@ -15,8 +17,13 @@ const ExpandableDiv: FC<ExpandableProps> = ({
   className = "",
 }): ReactElement => {
   const classes = useStyle({ expanded });
+  const { darkMode } = useContext(ConfigContext);
   return (
-    <div className={`${classes.container} ${className} `}>
+    <div
+      className={`${classes.container} ${
+        darkMode ? classes.dark : classes.light
+      } ${className} `}
+    >
       {expanded ? children : null}
     </div>
   );
@@ -38,6 +45,8 @@ const useStyle = createUseStyles({
       width: ({ expanded }) => (expanded ? "100%" : "0%"),
     },
   },
+  dark: theme.dark,
+  light: theme.light,
 });
 
 export default ExpandableDiv;

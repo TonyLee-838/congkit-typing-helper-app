@@ -7,11 +7,13 @@ import { terminateApp } from "../../remote";
 
 import Icon from "../common/Icon";
 import colors from "../../config/color";
-import { GlobalStateContext } from "../../stores/context";
+import { ConfigContext, GlobalStateContext } from "../../stores/context";
+import theme from "../../config/theme";
 
 const SideBar: FC = observer(
   (): ReactElement => {
     const globalStateStore = useContext(GlobalStateContext);
+    const { darkMode } = useContext(ConfigContext);
 
     const classes = useStyle({
       isExpanded: globalStateStore.isSidebarExpanded,
@@ -21,7 +23,11 @@ const SideBar: FC = observer(
       action(() => globalStateStore.setSelectedButton(button));
 
     return (
-      <div className={classes.container}>
+      <div
+        className={`${classes.container} ${
+          darkMode ? classes.dark : classes.light
+        } `}
+      >
         <Icon
           name="BsBookmarksFill"
           className={classes.icon}
@@ -54,7 +60,7 @@ const useStyle = createUseStyles({
     height: "195px",
     width: ({ isExpanded }) => (isExpanded ? "70px" : "0px"),
     right: ({ isExpanded }) => (isExpanded ? "-10px" : "-80px"),
-    backgroundColor: colors.light,
+    // backgroundColor: colors.light,
     borderTopLeftRadius: "5px",
     borderBottomLeftRadius: "5px",
     boxShadow: "3px 3px 3.5px" + colors.dark,
@@ -84,6 +90,9 @@ const useStyle = createUseStyles({
       color: colors.red,
     },
   },
+
+  dark: theme.dark,
+  light: theme.light,
 });
 
 export default SideBar;
