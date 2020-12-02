@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
+
 import MemoInput from "./MemoInput";
 
 interface MemoSubjectProps {

@@ -1,8 +1,9 @@
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
+
 import Icon from "../common/Icon";
-import colors from "../../config/color";
 import MemoInput from "./MemoInput";
+import colors from "../../config/color";
 
 interface MemoAddButtonProps {
   editable: boolean;

@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
+
 import Icon from "../common/Icon";
 import colors from "../../config/color";
 

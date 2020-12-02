@@ -1,87 +1,91 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useContext, useState } from "react";
 import { createUseStyles } from "react-jss";
+import { action } from "mobx";
+import { observer } from "mobx-react-lite";
 
 import MemoAddButton from "./MemoAddButton";
 import MemoControlButtons from "./MemoControlButtons";
 import MemoEntity from "./MemoEntity";
 import MemoSubject from "./MemoSubject";
+import { MemoContext } from "../../stores/context";
 
 interface MemoSectionProps {
   section: Memo.SectionType;
-  onSectionEntityChange: Function;
-  onSectionEntityDelete: Function;
-  onSectionSubjectChange: Function;
-  onSectionDelete: Function;
+  sectionIndex: number;
 }
 
-const MemoSection: FC<MemoSectionProps> = ({
-  section,
-  onSectionEntityChange,
-  onSectionEntityDelete,
-  onSectionSubjectChange,
-  onSectionDelete,
-}): ReactElement => {
-  const classes = useStyle();
-  const [editMode, setEditMode] = useState(false);
-  const [editIndex, setEditIndex] = useState("");
+const MemoSection: FC<MemoSectionProps> = observer(
+  ({ section, sectionIndex }): ReactElement => {
+    const classes = useStyle();
 
-  return (
-    <div className={classes.container}>
-      <MemoSubject
-        subject={section.subject}
-        editMode={editMode && editIndex === "subject"}
-        onCancel={() => setEditIndex("")}
-        onClick={() => setEditIndex("subject")}
-        onDelete={() => {
-          onSectionDelete();
-          setEditIndex("");
-        }}
-        onSubmit={(value) => {
-          onSectionSubjectChange(value);
-          setEditIndex("");
-        }}
-      />
+    const [editMode, setEditMode] = useState(false);
 
-      <div className={classes.section}>
-        {section.entities.map((entity, index) => (
-          <MemoEntity
-            editMode={editMode && editIndex === index.toString()}
-            entity={entity}
-            onClick={() => setEditIndex(index.toString())}
-            onCancel={() => setEditIndex("")}
-            onDelete={() => {
-              onSectionEntityDelete(index);
-              setEditIndex("");
-            }}
-            onSubmit={(value) => {
-              onSectionEntityChange(value, index);
-              setEditIndex("");
-            }}
-          />
-        ))}
+    const memoStore = useContext(MemoContext);
+    const { editEntityIndex: editIndex } = memoStore;
 
-        {editMode && (
-          <MemoAddButton
-            editable={editIndex === "new"}
-            onAddButtonClick={() => setEditIndex("new")}
-            onCancel={() => setEditIndex("")}
-            onSubmit={(value) => {
-              onSectionEntityChange(value, -1);
-              setEditIndex("");
-            }}
-            placeholder="例＝人弓"
-          />
-        )}
+    return (
+      <div className={classes.container}>
+        <MemoSubject
+          subject={section.subject}
+          editMode={editMode && editIndex === "subject"}
+          onCancel={action(() => memoStore.clearEditEntityIndex())}
+          onClick={action(() => memoStore.setEditEntityIndex("subject"))}
+          onDelete={action(() => {
+            memoStore.removeSection(sectionIndex);
+            memoStore.clearEditEntityIndex();
+          })}
+          onSubmit={action((value: any) => {
+            memoStore.changeSectionSubject(value, sectionIndex);
+            memoStore.clearEditEntityIndex();
+          })}
+        />
+
+        <div className={classes.section}>
+          {section.entities &&
+            section.entities.map((entity, index) => (
+              <MemoEntity
+                editMode={editMode && editIndex === index.toString()}
+                entity={entity}
+                onClick={action(() =>
+                  memoStore.setEditEntityIndex(index.toString())
+                )}
+                onCancel={action(() => memoStore.clearEditEntityIndex())}
+                onDelete={action(() => {
+                  memoStore.removeEntity(sectionIndex, index);
+                  memoStore.clearEditEntityIndex();
+                })}
+                onSubmit={action((value: any) => {
+                  memoStore.changeEntity(value, sectionIndex, index);
+                  memoStore.clearEditEntityIndex();
+                })}
+              />
+            ))}
+
+          {editMode && (
+            <MemoAddButton
+              editable={editIndex === "new"}
+              onAddButtonClick={action(() =>
+                memoStore.setEditEntityIndex("new")
+              )}
+              onCancel={action(() => memoStore.clearEditEntityIndex())}
+              onSubmit={action((value: any) => {
+                memoStore.addEntity(value, sectionIndex);
+                memoStore.clearEditEntityIndex();
+              })}
+              placeholder="例＝人弓"
+            />
+          )}
+        </div>
+
+        <MemoControlButtons
+          editMode={editMode}
+          onEdit={() => setEditMode(true)}
+          onFinish={() => setEditMode(false)}
+        />
       </div>
-
-      <MemoControlButtons
-        editMode={editMode}
-        onEdit={() => setEditMode(true)}
-        onFinish={() => setEditMode(false)}
-      />
-    </div>
-  );
-};
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   container: {

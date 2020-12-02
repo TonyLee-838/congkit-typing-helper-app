@@ -56,7 +56,8 @@ class MemoStore {
     this.memo = getMemo();
   }
 
-  addEntity(entity: string, sectionIndex: number) {
+  addEntity(input: string, sectionIndex: number) {
+    const entity = this.trimInput(input);
     addMemoEntity(entity, sectionIndex);
     this.memo = getMemo();
   }
@@ -66,9 +67,16 @@ class MemoStore {
     this.memo = getMemo();
   }
 
-  changeEntity(entity: string, sectionIndex: number, entityIndex: number) {
+  changeEntity(input: string, sectionIndex: number, entityIndex: number) {
+    const entity = this.trimInput(input);
     updateMemoEntity(entity, entityIndex, sectionIndex);
     this.memo = getMemo();
+  }
+
+  //1=11 -> {char:1,input=11}
+  private trimInput(inputStr: string) {
+    const [char, input] = inputStr.split(/=|＝/);
+    return { char, input };
   }
 }
 

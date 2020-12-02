@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import colors from "../../config/color";
@@ -12,30 +13,32 @@ interface MemoEntityProps {
   onDelete: React.MouseEventHandler;
 }
 
-const MemoEntity: FC<MemoEntityProps> = ({
-  entity,
-  editMode,
-  onClick,
-  onCancel,
-  onSubmit,
-  onDelete,
-}): ReactElement => {
-  const classes = useStyle({ editMode });
-  return editMode ? (
-    <MemoInput
-      initialValue={`${entity.char}＝${entity.input}`}
-      onCancel={onCancel}
-      onSubmit={onSubmit}
-      deleteButton
-      onDelete={onDelete}
-    />
-  ) : (
-    <div className={classes.entity} onClick={onClick}>
-      <span className={classes.char}>{entity.char}</span>
-      <span className={classes.input}>{entity.input}</span>
-    </div>
-  );
-};
+const MemoEntity: FC<MemoEntityProps> = observer(
+  ({
+    entity,
+    editMode,
+    onClick,
+    onCancel,
+    onSubmit,
+    onDelete,
+  }): ReactElement => {
+    const classes = useStyle({ editMode });
+    return editMode ? (
+      <MemoInput
+        initialValue={`${entity.char}＝${entity.input}`}
+        onCancel={onCancel}
+        onSubmit={onSubmit}
+        deleteButton
+        onDelete={onDelete}
+      />
+    ) : (
+      <div className={classes.entity} onClick={onClick}>
+        <span className={classes.char}>{entity.char}</span>
+        <span className={classes.input}>{entity.input}</span>
+      </div>
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   entity: {
