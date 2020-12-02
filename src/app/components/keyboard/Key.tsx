@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
-import { ConfigContext, GlobalStateContext } from "../../stores/context";
+import { ConfigContext } from "../../stores/context";
 import theme from "../../config/theme";
 
 export type KeyProps = {
@@ -32,13 +32,6 @@ const Key = observer(
       darkMode,
     });
 
-    const handleMouseDown = () => {
-      onActivate();
-    };
-    const handleMouseUp = () => {
-      onDeactivate();
-    };
-
     const classNames = ` ${container} ${darkMode ? dark : light} ${
       isActive ? active : ""
     } ${className}`;
@@ -46,8 +39,8 @@ const Key = observer(
     return (
       <div
         className={classNames}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
+        onMouseDown={() => onActivate()}
+        onMouseUp={() => onDeactivate()}
       >
         {children}
       </div>

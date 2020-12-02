@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import { createUseStyles } from "react-jss";
 import colors from "../../config/color";
 
@@ -13,7 +13,6 @@ const ToggleInput: FC<ToggleInputProps> = ({
   on,
   onToggle,
 }): ReactElement => {
-  // const [on, seton] = useState(false);
   const classes = useStyle({ on });
 
   return (

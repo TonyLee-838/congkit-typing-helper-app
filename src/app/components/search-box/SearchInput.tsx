@@ -1,8 +1,9 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useContext, useState } from "react";
 import { createUseStyles } from "react-jss";
 import Button from "../common/Button";
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
+import { ConfigContext } from "../../stores/context";
 
 interface SearchInputProps {
   onSearch: Function;
@@ -15,8 +16,10 @@ const SearchInput: FC<SearchInputProps> = ({
   onAddToMemo,
   onClear,
 }): ReactElement => {
-  const classes = useStyle();
   const [value, setValue] = useState("");
+
+  const { darkMode } = useContext(ConfigContext);
+  const classes = useStyle({ darkMode });
 
   const handleEnterKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") onSearch(value);
@@ -66,6 +69,8 @@ const useStyle = createUseStyles({
     fontFamily: fontFamilies.text,
     fontSize: "1.25rem",
     margin: "0px 5px 0px 5px",
+    backgroundColor: ({ darkMode }) => (darkMode ? colors.dark : colors.white),
+    color: ({ darkMode }) => (darkMode ? colors.white : colors.black),
   },
   buttons: {
     width: "max-content",
@@ -76,6 +81,8 @@ const useStyle = createUseStyles({
   button: {
     margin: "0px 3px 0px 3px",
     height: "",
+    backgroundColor: ({ darkMode }) =>
+      darkMode ? colors.medium : colors.white,
   },
 });
 

@@ -1,16 +1,18 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
 import Icon from "../common/Icon";
 import colors from "../../config/color";
 
 import fontFamilies from "../../config/fontFamily";
+import { ConfigContext } from "../../stores/context";
 
 interface SearchResultProps {
   result: SearchResultType;
 }
 
 const SearchResult: FC<SearchResultProps> = ({ result }): ReactElement => {
-  const classes = useStyle();
+  const { darkMode } = useContext(ConfigContext);
+  const classes = useStyle({ darkMode });
   return (
     <div className={classes.result}>
       <div className={classes.char}>{result.term}</div>
@@ -46,7 +48,7 @@ const SearchResult: FC<SearchResultProps> = ({ result }): ReactElement => {
 
 const useStyle = createUseStyles({
   result: {
-    backgroundColor: colors.medium,
+    backgroundColor: ({ darkMode }) => (darkMode ? colors.dark : colors.medium),
     width: "95%",
     height: "max-content",
     display: "grid",

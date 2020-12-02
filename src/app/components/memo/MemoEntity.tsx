@@ -1,7 +1,8 @@
 import { observer } from "mobx-react-lite";
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
 import colors from "../../config/color";
+import { ConfigContext } from "../../stores/context";
 import MemoInput from "./MemoInput";
 
 interface MemoEntityProps {
@@ -22,7 +23,8 @@ const MemoEntity: FC<MemoEntityProps> = observer(
     onSubmit,
     onDelete,
   }): ReactElement => {
-    const classes = useStyle({ editable });
+    const { darkMode } = useContext(ConfigContext);
+    const classes = useStyle({ editable, darkMode });
     return editable ? (
       <MemoInput
         initialValue={`${entity.char}＝${entity.input}`}
@@ -46,7 +48,7 @@ const useStyle = createUseStyles({
     cursor: "pointer",
   },
   char: {
-    color: colors.darkBlue,
+    color: ({ darkMode }) => (darkMode ? colors.lightBlue : colors.darkBlue),
     fontWeight: "bolder",
     marginRight: "4px",
   },
