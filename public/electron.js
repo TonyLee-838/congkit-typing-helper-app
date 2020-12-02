@@ -1,4 +1,8 @@
 const { app, BrowserWindow, screen, globalShortcut } = require("electron");
+const path = require("path");
+const isDev = require("electron-is-dev");
+
+const { allFilesExist, initializeDb } = require("./ejectDbFiles");
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -16,16 +20,21 @@ const createWindow = () => {
     },
   });
 
-  mainWindow.loadURL("http://localhost:3010");
-  if (process.platform === "darwin") mainWindow.setAutoHideMenuBar(true);
+  if (!allFilesExist()) initializeDb();
 
+  mainWindow.loadURL(
+    isDev
+      ? "http://localhost:3010"
+      : `file://${path.join(__dirname, "../build/index.html")}`
+  );
+
+  if (process.platform === "darwin") mainWindow.setAutoHideMenuBar(true);
 
   globalShortcut.register("Alt+Shift+W", () => {
     const { x, y } = screen.getCursorScreenPoint();
     mainWindow.setPosition(x, y);
   });
 };
-app.whenReady().then(() => {});
 
 app.on("ready", createWindow);
 

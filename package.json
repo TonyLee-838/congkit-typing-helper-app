@@ -1,23 +1,27 @@
 {
-  "name": "app",
+  "name": "congkit-type-helper",
   "version": "0.1.0",
   "private": true,
-  "main": "src/renderer/electron-starter.js",
-  "dependencies": {
-    "concurrently": "^5.3.0",
-    "foreman": "^3.0.1",
-    "jss": "^10.5.0",
-    "lodash": "^4.17.20",
-    "lowdb": "^1.0.0",
-    "mobx": "^6.0.4",
-    "mobx-react-lite": "^3.1.6",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-icons": "^3.11.0",
-    "react-jss": "^10.5.0",
-    "react-scripts": "4.0.0",
-    "wait-on": "^5.2.0",
-    "web-vitals": "^0.2.4"
+  "main": "./public/electron.js",
+  "homepage": "./",
+  "author": {
+    "name": "Tony Lee",
+    "email": "toney8388@gmail.com"
+  },
+  "build": {
+    "appId": "com.congkit-type-helper",
+    "productName": "Congkit Type Helper",
+    "copyright": "Copyright © 2019 ${author}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "scripts": {
     "start": "PORT=3010 react-scripts start",
@@ -25,7 +29,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -45,7 +50,24 @@
       "last 1 safari version"
     ]
   },
+  "dependencies": {
+    "electron-is-dev": "^1.2.0",
+    "foreman": "^3.0.1",
+    "jss": "^10.5.0",
+    "lodash": "^4.17.20",
+    "lowdb": "^1.0.0",
+    "mobx": "^6.0.4",
+    "mobx-react-lite": "^3.1.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-icons": "^3.11.0",
+    "react-jss": "^10.5.0",
+    "react-scripts": "4.0.0",
+    "web-vitals": "^0.2.4"
+  },
   "devDependencies": {
+    "@rescripts/cli": "0.0.14",
+    "@rescripts/rescript-env": "0.0.12",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -54,7 +76,10 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "concurrently": "^5.3.0",
     "electron": "^7.1.9",
-    "typescript": "4.0.5"
+    "electron-builder": "^22.9.1",
+    "typescript": "4.0.5",
+    "wait-on": "^5.2.0"
   }
 }
