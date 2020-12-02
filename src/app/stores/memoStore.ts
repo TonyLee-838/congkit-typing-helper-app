@@ -42,6 +42,8 @@ class MemoStore {
   }
 
   addSection(subject: string) {
+    if (!this.isValidSubject(subject)) return;
+
     addMemoSection(subject);
     this.memo = getMemo();
   }
@@ -52,11 +54,15 @@ class MemoStore {
   }
 
   changeSectionSubject(subject: string, sectionIndx: number) {
+    if (!this.isValidSubject(subject)) return;
+
     updateMemoSubject(subject, sectionIndx);
     this.memo = getMemo();
   }
 
   addEntity(input: string, sectionIndex: number) {
+    if (!this.isValidEntity(input)) return;
+
     const entity = this.trimInput(input);
     addMemoEntity(entity, sectionIndex);
     this.memo = getMemo();
@@ -68,9 +74,20 @@ class MemoStore {
   }
 
   changeEntity(input: string, sectionIndex: number, entityIndex: number) {
+    if (!this.isValidEntity(input)) return;
+
     const entity = this.trimInput(input);
     updateMemoEntity(entity, entityIndex, sectionIndex);
     this.memo = getMemo();
+  }
+
+  private isValidSubject(inputStr: string) {
+    return inputStr.trim();
+  }
+
+  private isValidEntity(inputStr: string) {
+    // eslint-disable-next-line
+    return inputStr.match(/\X+[=|＝]\X+/);
   }
 
   //1=11 -> {char:1,input=11}
