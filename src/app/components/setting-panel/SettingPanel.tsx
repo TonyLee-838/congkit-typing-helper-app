@@ -7,6 +7,7 @@ import AppearanceSetting from "./AppearanceSetting";
 import fontFamilies from "../../config/fontFamily";
 import colors from "../../config/color";
 import { GlobalStateContext } from "../../stores/context";
+import { observer } from "mobx-react-lite";
 
 /**
  * Appearance setting:
@@ -19,23 +20,25 @@ import { GlobalStateContext } from "../../stores/context";
  * 2. customize hints
  */
 
-const SettingPanel: FC = (): ReactElement => {
-  const classes = useStyle();
+const SettingPanel: FC = observer(
+  (): ReactElement => {
+    const classes = useStyle();
 
-  const globalStateStore = useContext(GlobalStateContext);
+    const globalStateStore = useContext(GlobalStateContext);
 
-  return (
-    <ExpandableDiv expanded={globalStateStore.selectedButton === "setting"}>
-      <div>
-        <h3 className={classes.heading}>Setting</h3>
-        <Separator />
-        <div className={classes.container}>
-          <AppearanceSetting />
+    return (
+      <ExpandableDiv expanded={globalStateStore.selectedButton === "setting"}>
+        <div>
+          <h3 className={classes.heading}>Setting</h3>
+          <Separator />
+          <div className={classes.container}>
+            <AppearanceSetting />
+          </div>
         </div>
-      </div>
-    </ExpandableDiv>
-  );
-};
+      </ExpandableDiv>
+    );
+  }
+);
 
 const useStyle = createUseStyles({
   container: {

@@ -19,7 +19,11 @@ const AppearanceSetting: FC<AppearanceSettingProps> = observer(
     return (
       <SettingSection subject="Appearance">
         <>
-          <ToggleInput label="Dark Mode:" />
+          <ToggleInput
+            label="Dark Mode:"
+            on={configStore.darkMode}
+            onToggle={action((value: any) => configStore.setDarkMode(value))}
+          />
           <RangeInput
             label="Transparency:"
             max={1}

@@ -4,18 +4,24 @@ import colors from "../../config/color";
 
 interface ToggleInputProps {
   label: string;
+  on: boolean;
+  onToggle: Function;
 }
 
-const ToggleInput: FC<ToggleInputProps> = ({ label }): ReactElement => {
-  const [active, setActive] = useState(false);
-  const classes = useStyle({ active });
+const ToggleInput: FC<ToggleInputProps> = ({
+  label,
+  on,
+  onToggle,
+}): ReactElement => {
+  // const [on, seton] = useState(false);
+  const classes = useStyle({ on });
 
   return (
     <div className={classes.container}>
       <label className={classes.label}>{label}</label>
       <div className={classes.toggle}>
         <div className={classes.input} />
-        <span className={classes.slider} onClick={() => setActive(!active)} />
+        <span className={classes.slider} onClick={() => onToggle(!on)} />
       </div>
     </div>
   );
@@ -38,8 +44,7 @@ const useStyle = createUseStyles({
     height: "25px",
     display: "inline-block",
     borderRadius: "13px",
-    backgroundColor: ({ active }) =>
-      active ? colors.lightBlue : colors.medium,
+    backgroundColor: ({ on }) => (on ? colors.lightBlue : colors.medium),
     boxShadow: " inset 1.5px 1.5px 1px" + colors.dark,
   },
   slider: {
@@ -52,7 +57,7 @@ const useStyle = createUseStyles({
     backgroundColor: colors.white,
     boxShadow: "2px 2px 1px" + colors.dark,
     cursor: "pointer",
-    transform: ({ active }) => `translateX(${active ? "26px" : "0px"})`,
+    transform: ({ on }) => `translateX(${on ? "26px" : "0px"})`,
   },
 });
 
