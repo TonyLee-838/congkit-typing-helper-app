@@ -5,18 +5,18 @@ import Icon from "../common/Icon";
 import colors from "../../config/color";
 
 interface MemoControlButtonsProps {
-  editMode: boolean;
+  editable: boolean;
   onEdit: React.MouseEventHandler;
   onFinish: React.MouseEventHandler;
 }
 
 const MemoControlButtons: FC<MemoControlButtonsProps> = ({
-  editMode,
+  editable,
   onEdit,
   onFinish,
 }): ReactElement => {
   const classes = useStyle();
-  return editMode ? (
+  return editable ? (
     <Icon
       name="BsCheck"
       className={`${classes.editIcon} ${classes.finishIcon} `}

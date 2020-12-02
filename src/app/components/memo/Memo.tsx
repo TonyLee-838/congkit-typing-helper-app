@@ -24,7 +24,11 @@ const Memo: FC = observer(
           {memoStore.memo &&
             memoStore.memo.map((section, index) => (
               <>
-                <MemoSection section={section} sectionIndex={index} />
+                <MemoSection
+                  section={section}
+                  sectionIndex={index}
+                  editable={index.toString() === memoStore.editSectionIndex}
+                />
                 <Separator />
               </>
             ))}

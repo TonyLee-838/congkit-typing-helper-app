@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext, useState } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
@@ -10,15 +10,14 @@ import MemoSubject from "./MemoSubject";
 import { MemoContext } from "../../stores/context";
 
 interface MemoSectionProps {
+  editable: boolean;
   section: Memo.SectionType;
   sectionIndex: number;
 }
 
 const MemoSection: FC<MemoSectionProps> = observer(
-  ({ section, sectionIndex }): ReactElement => {
+  ({ section, sectionIndex, editable }): ReactElement => {
     const classes = useStyle();
-
-    const [editMode, setEditMode] = useState(false);
 
     const memoStore = useContext(MemoContext);
     const { editEntityIndex: editIndex } = memoStore;
@@ -27,7 +26,7 @@ const MemoSection: FC<MemoSectionProps> = observer(
       <div className={classes.container}>
         <MemoSubject
           subject={section.subject}
-          editMode={editMode && editIndex === "subject"}
+          editable={editable && editIndex === "subject"}
           onCancel={action(() => memoStore.clearEditEntityIndex())}
           onClick={action(() => memoStore.setEditEntityIndex("subject"))}
           onDelete={action(() => {
@@ -44,7 +43,7 @@ const MemoSection: FC<MemoSectionProps> = observer(
           {section.entities &&
             section.entities.map((entity, index) => (
               <MemoEntity
-                editMode={editMode && editIndex === index.toString()}
+                editable={editable && editIndex === index.toString()}
                 entity={entity}
                 onClick={action(() =>
                   memoStore.setEditEntityIndex(index.toString())
@@ -61,7 +60,7 @@ const MemoSection: FC<MemoSectionProps> = observer(
               />
             ))}
 
-          {editMode && (
+          {editable && (
             <MemoAddButton
               editable={editIndex === "new"}
               onAddButtonClick={action(() =>
@@ -78,9 +77,9 @@ const MemoSection: FC<MemoSectionProps> = observer(
         </div>
 
         <MemoControlButtons
-          editMode={editMode}
-          onEdit={() => setEditMode(true)}
-          onFinish={() => setEditMode(false)}
+          editable={editable}
+          onEdit={action(() => memoStore.setEditSectionIndex(sectionIndex))}
+          onFinish={action(() => memoStore.clearEditSectionIndex())}
         />
       </div>
     );

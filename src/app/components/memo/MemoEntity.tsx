@@ -6,7 +6,7 @@ import MemoInput from "./MemoInput";
 
 interface MemoEntityProps {
   entity: Memo.EntityType;
-  editMode: boolean;
+  editable: boolean;
   onClick: React.MouseEventHandler;
   onCancel: React.MouseEventHandler;
   onSubmit: React.MouseEventHandler;
@@ -16,14 +16,14 @@ interface MemoEntityProps {
 const MemoEntity: FC<MemoEntityProps> = observer(
   ({
     entity,
-    editMode,
+    editable,
     onClick,
     onCancel,
     onSubmit,
     onDelete,
   }): ReactElement => {
-    const classes = useStyle({ editMode });
-    return editMode ? (
+    const classes = useStyle({ editable });
+    return editable ? (
       <MemoInput
         initialValue={`${entity.char}＝${entity.input}`}
         onCancel={onCancel}

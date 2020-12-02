@@ -5,7 +5,7 @@ import MemoInput from "./MemoInput";
 
 interface MemoSubjectProps {
   subject: string;
-  editMode: boolean;
+  editable: boolean;
   onClick: React.MouseEventHandler;
   onCancel: React.MouseEventHandler;
   onDelete: React.MouseEventHandler;
@@ -14,14 +14,14 @@ interface MemoSubjectProps {
 
 const MemoSubject: FC<MemoSubjectProps> = ({
   subject,
-  editMode,
+  editable,
   onClick,
   onCancel,
   onDelete,
   onSubmit,
 }): ReactElement => {
   const classes = useStyle();
-  return editMode ? (
+  return editable ? (
     <MemoInput
       initialValue={subject}
       onCancel={onCancel}
