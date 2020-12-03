@@ -1,7 +1,16 @@
 const remote = window.remote;
 
+const { app, getCurrentWindow, globalShortcut, screen } = remote;
+
 const terminateApp = () => {
-  remote.app.quit();
+  app.quit();
 };
 
-module.exports = { terminateApp };
+const registerMovingWindowShortcut = (keys = "Alt+Shift+W") => {
+  globalShortcut.register(keys, () => {
+    const { x, y } = screen.getCursorScreenPoint();
+    getCurrentWindow().setPosition(x, y);
+  });
+};
+
+module.exports = { terminateApp, registerMovingWindowShortcut };

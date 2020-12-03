@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createUseStyles } from "react-jss";
 
 import SideBar from "./components/sidebar/SideBar";
@@ -7,9 +7,14 @@ import Memo from "./components/memo/Memo";
 import SearchBox from "./components/search-box/SearchBox";
 import SettingPanel from "./components/setting-panel/SettingPanel";
 import ContextProvider from "./stores/context";
+import { registerMovingWindowShortcut } from "./remote";
 
 function App() {
   const classes = useStyle();
+
+  useEffect(() => {
+    registerMovingWindowShortcut();
+  });
   return (
     <div className={`App ${classes.container} `}>
       <ContextProvider>

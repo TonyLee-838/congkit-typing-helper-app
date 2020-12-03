@@ -2,7 +2,7 @@ const { app, BrowserWindow, screen, globalShortcut } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 
-const { allFilesExist, initializeDb } = require("./ejectDbFiles");
+const { allFilesExist, initializeDb } = require("./setupDb");
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -29,11 +29,6 @@ const createWindow = () => {
   );
 
   if (process.platform === "darwin") mainWindow.setAutoHideMenuBar(true);
-
-  globalShortcut.register("Alt+Shift+W", () => {
-    const { x, y } = screen.getCursorScreenPoint();
-    mainWindow.setPosition(x, y);
-  });
 };
 
 app.on("ready", createWindow);
