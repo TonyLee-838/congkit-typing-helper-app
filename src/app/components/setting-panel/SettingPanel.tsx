@@ -8,6 +8,7 @@ import fontFamilies from "../../config/fontFamily";
 import colors from "../../config/color";
 import { GlobalStateContext } from "../../stores/context";
 import { observer } from "mobx-react-lite";
+import ShortcutSetting from "./ShortcutSetting";
 
 /**
  * Appearance setting:
@@ -33,6 +34,7 @@ const SettingPanel: FC = observer(
           <Separator />
           <div className={classes.container}>
             <AppearanceSetting />
+            <ShortcutSetting />
           </div>
         </div>
       </ExpandableDiv>

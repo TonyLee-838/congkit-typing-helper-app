@@ -1,5 +1,4 @@
 import React, { FC, ReactElement, useContext } from "react";
-import { createUseStyles } from "react-jss";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 
@@ -12,8 +11,6 @@ interface AppearanceSettingProps {}
 
 const AppearanceSetting: FC<AppearanceSettingProps> = observer(
   (props): ReactElement => {
-    const classes = useStyle();
-
     const configStore = useContext(ConfigContext);
 
     return (
@@ -39,10 +36,5 @@ const AppearanceSetting: FC<AppearanceSettingProps> = observer(
     );
   }
 );
-
-const useStyle = createUseStyles({
-  container: {},
-  settingBlock: {},
-});
 
 export default AppearanceSetting;
