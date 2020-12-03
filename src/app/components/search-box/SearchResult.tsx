@@ -4,14 +4,14 @@ import Icon from "../common/Icon";
 import colors from "../../config/color";
 
 import fontFamilies from "../../config/fontFamily";
-import { ConfigContext } from "../../stores/context";
+import { GlobalStateContext } from "../../stores/context";
 
 interface SearchResultProps {
   result: SearchResultType;
 }
 
 const SearchResult: FC<SearchResultProps> = ({ result }): ReactElement => {
-  const { darkMode } = useContext(ConfigContext);
+  const { darkMode } = useContext(GlobalStateContext);
   const classes = useStyle({ darkMode });
   return (
     <div className={classes.result}>

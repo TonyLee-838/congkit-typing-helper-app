@@ -5,7 +5,7 @@ import colors from "../../config/color";
 interface ToggleInputProps {
   label: string;
   on: boolean;
-  onToggle: Function;
+  onToggle: React.MouseEventHandler;
 }
 
 const ToggleInput: FC<ToggleInputProps> = ({
@@ -20,7 +20,7 @@ const ToggleInput: FC<ToggleInputProps> = ({
       <label className={classes.label}>{label}</label>
       <div className={classes.toggle}>
         <div className={classes.input} />
-        <span className={classes.slider} onClick={() => onToggle(!on)} />
+        <span className={classes.slider} onClick={onToggle} />
       </div>
     </div>
   );

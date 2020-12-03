@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 
 import Icon from "../common/Icon";
 import colors from "../../config/color";
-import { ConfigContext } from "../../stores/context";
+import { GlobalStateContext } from "../../stores/context";
 
 const metaKeys: { [index: string]: any } = {
   Meta: {
@@ -32,7 +32,7 @@ interface ShortcutInputProps {
 const ShortcutInput: FC<ShortcutInputProps> = observer(
   ({ label }): ReactElement => {
     const [keys, setKeys] = useState<string[]>([]);
-    const { darkMode } = useContext(ConfigContext);
+    const { darkMode } = useContext(GlobalStateContext);
 
     const classes = useStyle({ darkMode });
 

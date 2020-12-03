@@ -5,21 +5,22 @@ import { observer } from "mobx-react-lite";
 import RangeInput from "./RangeInput";
 import SettingSection from "./SettingSection";
 import ToggleInput from "./ToggleInput";
-import { ConfigContext } from "../../stores/context";
+import { ConfigContext, GlobalStateContext } from "../../stores/context";
 
 interface AppearanceSettingProps {}
 
 const AppearanceSetting: FC<AppearanceSettingProps> = observer(
   (props): ReactElement => {
     const configStore = useContext(ConfigContext);
+    const globalStateStore = useContext(GlobalStateContext);
 
     return (
       <SettingSection subject="Appearance">
         <>
           <ToggleInput
             label="Dark Mode:"
-            on={configStore.darkMode}
-            onToggle={action((value: any) => configStore.setDarkMode(value))}
+            on={globalStateStore.darkMode}
+            onToggle={action(() => globalStateStore.toggleDarkMode())}
           />
           <RangeInput
             label="Transparency:"

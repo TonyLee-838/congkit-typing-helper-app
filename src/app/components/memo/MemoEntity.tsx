@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { FC, ReactElement, useContext } from "react";
 import { createUseStyles } from "react-jss";
 import colors from "../../config/color";
-import { ConfigContext } from "../../stores/context";
+import { GlobalStateContext } from "../../stores/context";
 import MemoInput from "./MemoInput";
 
 interface MemoEntityProps {
@@ -23,7 +23,7 @@ const MemoEntity: FC<MemoEntityProps> = observer(
     onSubmit,
     onDelete,
   }): ReactElement => {
-    const { darkMode } = useContext(ConfigContext);
+    const { darkMode } = useContext(GlobalStateContext);
     const classes = useStyle({ editable, darkMode });
     return editable ? (
       <MemoInput

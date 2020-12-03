@@ -5,9 +5,14 @@ class GlobalStateStore {
   isListeningToKeyboard: boolean = true;
   isTransparent: boolean = true;
   selectedButton: ControlButtonType = "";
+  darkMode: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
   }
 
   toggleSidebarExpansion() {

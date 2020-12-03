@@ -7,13 +7,12 @@ import { terminateApp } from "../../remote";
 
 import Icon from "../common/Icon";
 import colors from "../../config/color";
-import { ConfigContext, GlobalStateContext } from "../../stores/context";
+import { GlobalStateContext } from "../../stores/context";
 import theme from "../../config/theme";
 
 const SideBar: FC = observer(
   (): ReactElement => {
     const globalStateStore = useContext(GlobalStateContext);
-    const { darkMode } = useContext(ConfigContext);
 
     const classes = useStyle({
       isExpanded: globalStateStore.isSidebarExpanded,
@@ -25,7 +24,7 @@ const SideBar: FC = observer(
     return (
       <div
         className={`${classes.container} ${
-          darkMode ? classes.dark : classes.light
+          globalStateStore.darkMode ? classes.dark : classes.light
         } `}
       >
         <Icon

@@ -3,7 +3,7 @@ import { createUseStyles } from "react-jss";
 import Button from "../common/Button";
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
-import { ConfigContext } from "../../stores/context";
+import { GlobalStateContext } from "../../stores/context";
 
 interface SearchInputProps {
   onSearch: Function;
@@ -18,7 +18,7 @@ const SearchInput: FC<SearchInputProps> = ({
 }): ReactElement => {
   const [value, setValue] = useState("");
 
-  const { darkMode } = useContext(ConfigContext);
+  const { darkMode } = useContext(GlobalStateContext);
   const classes = useStyle({ darkMode });
 
   const handleEnterKeyPress = (e: React.KeyboardEvent) => {

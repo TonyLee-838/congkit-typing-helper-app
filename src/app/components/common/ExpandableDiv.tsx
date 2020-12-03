@@ -4,7 +4,7 @@ import { createUseStyles } from "react-jss";
 
 import colors from "../../config/color";
 import theme from "../../config/theme";
-import { ConfigContext } from "../../stores/context";
+import { GlobalStateContext } from "../../stores/context";
 
 export interface ExpandableProps {
   expanded: boolean;
@@ -15,7 +15,7 @@ export interface ExpandableProps {
 const ExpandableDiv: FC<ExpandableProps> = observer(
   ({ expanded = false, children, className = "" }): ReactElement => {
     const classes = useStyle({ expanded });
-    const { darkMode } = useContext(ConfigContext);
+    const { darkMode } = useContext(GlobalStateContext);
     return (
       <div
         className={`${classes.container} ${

@@ -5,16 +5,11 @@ import { action } from "mobx";
 import Icon from "../common/Icon";
 import Key from "./Key";
 import fontFamilies from "../../config/fontFamily";
-import {
-  KeyContext,
-  ConfigContext,
-  GlobalStateContext,
-} from "../../stores/context";
+import { KeyContext, GlobalStateContext } from "../../stores/context";
 
 const FunctionKeys = () => {
   const classes = useStyle();
   const keyStore = useContext(KeyContext);
-  const configStore = useContext(ConfigContext);
   const globalStateStore = useContext(GlobalStateContext);
 
   return (
@@ -24,7 +19,7 @@ const FunctionKeys = () => {
         isActive={keyStore.activeKey === "Trans"}
         onActivate={action(() => keyStore.setActiveKey("Trans"))}
         onDeactivate={action(() => {
-          configStore.toggleTransparent();
+          globalStateStore.toggleTransparent();
           keyStore.clearActiveKey();
         })}
       >

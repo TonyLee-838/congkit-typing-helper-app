@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 
 import colors from "../../config/color";
 import fontFamilies from "../../config/fontFamily";
-import { ConfigContext } from "../../stores/context";
+import { ConfigContext, GlobalStateContext } from "../../stores/context";
 import theme from "../../config/theme";
 
 export type KeyProps = {
@@ -23,7 +23,8 @@ const Key = observer(
     onDeactivate,
     isActive,
   }: KeyProps): ReactElement => {
-    const { isTransparent, transparency, darkMode } = useContext(ConfigContext);
+    const { transparency } = useContext(ConfigContext);
+    const { isTransparent, darkMode } = useContext(GlobalStateContext);
 
     const { active, dark, light, container } = useStyle({
       isActive,
