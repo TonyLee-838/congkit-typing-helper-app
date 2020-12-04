@@ -3,7 +3,13 @@ import { makeAutoObservable } from "mobx";
 import { queryCharacter } from "../../db/api/dictionary";
 import KeyStore from "./keyStore";
 import getKeyMap from "../helper/getKeyMap";
-class SearchStore {
+
+interface ISearchStore {
+  hasNoResult(): boolean;
+  clear(): void;
+  search(terms: string): void;
+}
+class SearchStore implements ISearchStore {
   keyMap;
   terms: string = "";
   results: SearchResultType[] = [];
@@ -27,6 +33,7 @@ class SearchStore {
 
     this.terms = terms;
     const results: SearchResultType[] = [];
+
     terms.split("").forEach((term) => {
       const codeAlphanumeric: string[] = queryCharacter(term).split("");
       const codeChinese = codeAlphanumeric.map(
