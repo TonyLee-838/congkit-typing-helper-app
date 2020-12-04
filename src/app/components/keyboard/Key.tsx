@@ -8,8 +8,8 @@ import { ConfigContext, GlobalStateContext } from "../../stores/context";
 import theme from "../../config/theme";
 
 export type KeyProps = {
-  onActivate: Function;
-  onDeactivate: Function;
+  onActivate: React.MouseEventHandler;
+  onDeactivate: React.MouseEventHandler;
   isActive: boolean;
   className?: string;
   children?: ReactElement;
@@ -40,8 +40,8 @@ const Key = observer(
     return (
       <div
         className={classNames}
-        onMouseDown={() => onActivate()}
-        onMouseUp={() => onDeactivate()}
+        onMouseDown={onActivate}
+        onMouseUp={onDeactivate}
       >
         {children}
       </div>

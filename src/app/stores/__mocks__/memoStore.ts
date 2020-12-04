@@ -1,36 +1,26 @@
 import { makeAutoObservable } from "mobx";
-import {
-  addMemoEntity,
-  addMemoSection,
-  getMemo,
-  removeMemoEntity,
-  removeMemoSection,
-  updateMemoEntity,
-  updateMemoSubject,
-} from "../../db/api/memo";
+//
 
-interface IMemoStore {
-  setEditSectionIndex(sectionIndex: number | string): void;
-  setEditEntityIndex(entityIndex: number | string): void;
-  clearEditEntityIndex(): void;
-  clearEditSectionIndex(): void;
-  addSection(subject: string): void;
-  removeSection(sectionIndex: number): void;
-  changeSectionSubject(subject: string, sectionIndx: number): void;
+const fakeMemo = [
+  {
+    subject: "1",
+    entities: [
+      {
+        char: "1",
+        input: "1",
+      },
+    ],
+  },
+];
 
-  addEntity(input: string, sectionIndex: number): void;
-  changeEntity(input: string, sectionIndex: number, entityIndex: number): void;
-  removeEntity(sectionIndex: number, entityIndex: number): void;
-}
-
-class MemoStore implements IMemoStore {
+class MemoStore {
   memo: Memo.SectionType[] = [];
   editSectionIndex: string = "";
   editEntityIndex: string = "";
 
   constructor() {
     makeAutoObservable(this);
-    this.memo = getMemo();
+    this.memo = fakeMemo;
   }
 
   setEditSectionIndex(sectionIndex: number | string) {
@@ -58,53 +48,63 @@ class MemoStore implements IMemoStore {
   addSection(subject: string) {
     if (!this.isValidSubject(subject)) return;
 
-    addMemoSection(subject);
-    this.memo = getMemo();
+    // addMemoSection(subject);
+    this.memo = [...fakeMemo, { subject, entities: [] }];
   }
 
   removeSection(sectionIndex: number) {
-    removeMemoSection(sectionIndex);
-    this.memo = getMemo();
+    // removeMemoSection(sectionIndex);
+    this.memo = fakeMemo.filter((_, i) => i !== sectionIndex);
   }
 
   changeSectionSubject(subject: string, sectionIndx: number) {
     if (!this.isValidSubject(subject)) return;
 
-    updateMemoSubject(subject, sectionIndx);
-    this.memo = getMemo();
+    // updateMemoSubject(subject, sectionIndx);
+    const copy = fakeMemo;
+    copy[sectionIndx].subject = subject;
+    this.memo = copy;
   }
 
   addEntity(input: string, sectionIndex: number) {
     if (!this.isValidEntity(input)) return;
 
     const entity = this.trimInput(input);
-    addMemoEntity(entity, sectionIndex);
-    this.memo = getMemo();
+    // addMemoEntity(entity, sectionIndex);
+
+    const copy = fakeMemo;
+    copy[sectionIndex].entities.push(entity);
+    this.memo = copy;
   }
 
   removeEntity(sectionIndex: number, entityIndex: number) {
-    removeMemoEntity(entityIndex, sectionIndex);
-    this.memo = getMemo();
+    const copy = fakeMemo;
+    delete copy[sectionIndex].entities[entityIndex];
+
+    this.memo = copy;
   }
 
   changeEntity(input: string, sectionIndex: number, entityIndex: number) {
     if (!this.isValidEntity(input)) return;
 
     const entity = this.trimInput(input);
-    updateMemoEntity(entity, entityIndex, sectionIndex);
-    this.memo = getMemo();
+    // updateMemoEntity(entity, entityIndex, sectionIndex);
+    const copy = fakeMemo;
+    copy[sectionIndex].entities[entityIndex] = entity;
+    this.memo = copy;
   }
 
-  isValidSubject(inputStr: string) {
+  private isValidSubject(inputStr: string) {
     return inputStr.trim();
   }
 
-  isValidEntity(inputStr: string) {
-    return /^.[=|＝].+$/.test(inputStr);
+  private isValidEntity(inputStr: string) {
+    // eslint-disable-next-line
+    return inputStr.match(/\X+[=|＝]\X+/);
   }
 
   //1=11 -> {char:1,input=11}
-  trimInput(inputStr: string) {
+  private trimInput(inputStr: string) {
     const [char, input] = inputStr.split(/=|＝/);
     return { char, input };
   }
