@@ -1,32 +1,31 @@
 import React from "react";
 import Key from "../Key";
 import ContextProvider from "../../../stores/context";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import { shallow, configure } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-configure({ adapter: new Adapter() });
+// import { shallow, configure } from "enzyme";
+// import Adapter from "enzyme-adapter-react-16";
+// configure({ adapter: new Adapter() });
 
-jest.mock("../../../../db/api/keyInfo.js");
-jest.mock("../../../../db/api/config.js");
 jest.mock("../../../stores/context.tsx");
 describe("components/keyboard/Key", () => {
+  const handleActivate = jest.fn();
+  const handleDeactivate = jest.fn();
+
+  const wrapper = render(
+    <ContextProvider>
+      <Key
+        isActive={false}
+        onActivate={handleActivate}
+        onDeactivate={handleDeactivate}
+      >
+        <div id="content" />
+      </Key>
+    </ContextProvider>
+  );
+
   it("should render the Key component as well as its children node", () => {
-    const handleActivate = jest.fn();
-    const handleDeactivate = jest.fn();
-
-    const wrapper = shallow(
-      <ContextProvider>
-        <Key
-          isActive={false}
-          onActivate={handleActivate}
-          onDeactivate={handleDeactivate}
-        >
-          <div id="content" />
-        </Key>
-      </ContextProvider>
-    );
-
-    expect(wrapper.childAt(1)).toBeDefined();
-    expect(wrapper.contains(<div id="content" />)).toBe(true);
+    expect(wrapper.container.querySelector("#content")).not.toBeNull();
   });
 });

@@ -17,6 +17,13 @@ export const ConfigContext = createContext(configStore);
 export const SearchContext = createContext(searchStore);
 export const MemoContext = createContext(memoStore);
 
+export const stores = {
+  globalStateStore,
+  keyStore,
+  configStore,
+  searchStore,
+  memoStore,
+};
 const ContextProvider = ({ children }: any) => (
   <GlobalStateContext.Provider value={globalStateStore}>
     <KeyContext.Provider value={keyStore}>

@@ -16,10 +16,10 @@ const CharacterKeys: FC = observer(
 
     return (
       <div className={classes.container}>
-        {keyInfo.map((col, index) => (
-          <div className={classes.keyboardColumn}>
-            {col.map((key) => (
-              <div className={classes.characterKeys}>
+        {keyInfo.map((col, i) => (
+          <div key={`col-${i}`} className={classes.keyboardColumn}>
+            {col.map((key, j) => (
+              <div key={`key-${i}-${j}`} className={classes.characterKeys}>
                 <Key
                   isActive={activeKey.toUpperCase() === key.letter}
                   onActivate={action(() =>
@@ -38,7 +38,7 @@ const CharacterKeys: FC = observer(
                 )}
               </div>
             ))}
-            {index === keyInfo.length - 1 && <FunctionKeys />}
+            {i === keyInfo.length - 1 && <FunctionKeys />}
           </div>
         ))}
       </div>

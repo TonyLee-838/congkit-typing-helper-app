@@ -17,7 +17,7 @@ export type KeyProps = {
 
 const Key = observer(
   ({
-    className,
+    className = "",
     children,
     onActivate,
     onDeactivate,
@@ -42,6 +42,7 @@ const Key = observer(
         className={classNames}
         onMouseDown={onActivate}
         onMouseUp={onDeactivate}
+        role="button"
       >
         {children}
       </div>

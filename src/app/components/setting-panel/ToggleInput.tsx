@@ -20,7 +20,7 @@ const ToggleInput: FC<ToggleInputProps> = ({
       <label className={classes.label}>{label}</label>
       <div className={classes.toggle}>
         <div className={classes.input} />
-        <span className={classes.slider} onClick={onToggle} />
+        <span className={classes.slider} onClick={onToggle} role="button" />
       </div>
     </div>
   );

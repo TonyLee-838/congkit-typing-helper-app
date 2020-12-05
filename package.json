@@ -27,7 +27,7 @@
     "start": "PORT=3010 react-scripts start",
     "dev": "concurrently \"BROWSER=none PORT=3010 react-scripts start\" \"wait-on http://localhost:3010 && electron .\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --watch",
     "eject": "react-scripts eject",
     "electron": "electron .",
     "dist": "electron-builder"
