@@ -1,12 +1,9 @@
 import React from "react";
-// import Enzyme, { shallow, render } from "enzyme";
-// import Adapter from "enzyme-adapter-react-16";
 import { render, RenderResult, act } from "@testing-library/react";
 
 import CharacterKeys from "../CharacterKeys";
 import ContextProvider from "../../../stores/context";
 import { stores } from "../../../stores/context";
-// Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock("../../../stores/context.tsx");
 
@@ -29,6 +26,9 @@ describe("CharacterKeys component", () => {
     expect(
       renderer.container.querySelectorAll(".characterKeys-0-2-3").length
     ).toBe(26);
+    expect(
+      renderer.container.querySelector(".functionKeys-0-2-38")?.children.length
+    ).toBe(2);
   });
 
   it("should render HintBox component for the key that is being pressed.", () => {
