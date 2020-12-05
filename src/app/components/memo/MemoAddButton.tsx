@@ -6,7 +6,7 @@ import MemoInput from "./MemoInput";
 import colors from "../../config/color";
 
 interface MemoAddButtonProps {
-  editable: boolean;
+  editable?: boolean;
   onAddButtonClick: React.MouseEventHandler;
   onCancel: React.MouseEventHandler;
   onSubmit: React.MouseEventHandler;
@@ -14,7 +14,7 @@ interface MemoAddButtonProps {
 }
 
 const MemoAddButton: FC<MemoAddButtonProps> = ({
-  editable,
+  editable = false,
   onAddButtonClick,
   onCancel,
   onSubmit,
