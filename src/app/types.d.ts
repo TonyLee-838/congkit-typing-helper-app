@@ -27,3 +27,4 @@ type SearchResultType = {
 };
 
 type ControlButtonType = "memo" | "setting" | "exit" | "search" | "";
+type ButtonTheme = "default" | "info" | "success" | "warning" | "disable";

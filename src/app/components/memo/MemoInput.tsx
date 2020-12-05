@@ -39,14 +39,21 @@ const MemoInput: FC<MemoInputProps> = ({
         onKeyPress={handleEnterKeyPress}
       />
       <div className={classes.icons}>
-        <Icon name="BsX" className={classes.cancelIcon} onClick={onCancel} />
+        <Icon
+          role="button"
+          name="BsX"
+          className={classes.cancelIcon}
+          onClick={onCancel}
+        />
         <Icon
           name="BsCheck"
+          role="button"
           className={classes.submitIcon}
           onClick={() => onSubmit(value)}
         />
         {deleteButton && (
           <Icon
+            role="button"
             name="BsTrash"
             className={classes.deleteIcon}
             onClick={onDelete}

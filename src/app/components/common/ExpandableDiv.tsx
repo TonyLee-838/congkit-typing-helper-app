@@ -7,7 +7,7 @@ import theme from "../../config/theme";
 import { GlobalStateContext } from "../../stores/context";
 
 export interface ExpandableProps {
-  expanded: boolean;
+  expanded?: boolean;
   children?: ReactElement;
   className?: string;
 }
@@ -22,7 +22,7 @@ const ExpandableDiv: FC<ExpandableProps> = observer(
           darkMode ? classes.dark : classes.light
         } ${className} `}
       >
-        {expanded ? children : null}
+        {expanded && children}
       </div>
     );
   }

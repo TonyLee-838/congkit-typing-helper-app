@@ -56,14 +56,12 @@ const presets: { [index: string]: any } = {
   },
 };
 
-type ButtonTheme = "default" | "info" | "success" | "warning" | "disable";
-
 interface ButtonProps {
   className?: string;
   disable?: boolean;
   label?: string;
   onClick: React.MouseEventHandler;
-  theme?: ButtonTheme;
+  theme?: ButtonTheme | "";
   role?: string;
 }
 
