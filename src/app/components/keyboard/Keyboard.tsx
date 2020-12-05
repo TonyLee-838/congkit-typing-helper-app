@@ -22,7 +22,7 @@ const Keyboard = observer(
         document.onkeydown = null;
         document.onkeyup = null;
       }
-    }, [isListeningToKeyboard, keyStore]);
+    }, [isListeningToKeyboard, keyStore, globalStateStore]);
 
     const classes = useStyle({ activeKey });
 
