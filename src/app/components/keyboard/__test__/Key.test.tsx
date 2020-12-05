@@ -1,9 +1,11 @@
 import React from "react";
-import Key from "../Key";
-import ContextProvider from "../../../stores/context";
+// import ReactDOM from 'react-dom';
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 
+import Key from "../Key";
+import ContextProvider from "../../../stores/context";
 // import { shallow, configure } from "enzyme";
 // import Adapter from "enzyme-adapter-react-16";
 // configure({ adapter: new Adapter() });

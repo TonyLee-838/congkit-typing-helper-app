@@ -11,8 +11,10 @@ const HintBox: FC<HintBoxProps> = ({ hints }): ReactElement => {
   const classes = useStyle();
   return (
     <div className={classes.container}>
-      {hints.map((hint) => (
-        <span className={classes.hint}>{hint}</span>
+      {hints.map((hint, i) => (
+        <span key={`hint-${i}`} className={classes.hint}>
+          {hint}
+        </span>
       ))}
     </div>
   );
